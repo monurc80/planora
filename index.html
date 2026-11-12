@@ -13,9 +13,19 @@
 <section id="calendar" class="section"><div class="toolbar"><div class="stack"><button class="btn small" id="prev-month">←</button><b id="month-label"></b><button class="btn small" id="next-month">→</button></div><select id="calendar-view"><option value="month">Aylık</option><option value="week">Haftalık</option><option value="day">Günlük</option><option value="year">Yıllık</option></select></div><div id="calendar-body"></div></section>
 <section id="reports" class="section"><div class="card"><h3>📈 Ajandana bir bakış</h3><div class="filterrow"><label class="field">Başlangıç<input id="report-from" type="date"></label><label class="field">Bitiş<input id="report-to" type="date"></label><label class="field">Tarih türü<select id="report-date-type"><option value="created_at">Oluşturma tarihi</option><option value="due_at">Planlanan bitiş</option></select></label></div><div class="grid" id="report-metrics"></div><p class="muted">Tamamlanma oranı</p><div class="chart"><span id="report-bar"></span></div><p id="report-rate" class="muted"></p></div></section>
 <section id="history" class="section"><div class="card"><h3>Kim, ne zaman, ne yaptı?</h3><div id="audit-list"></div></div></section>
-<section id="sharing" class="section"><div class="card"><h3>🤝 Birlikte Yapalım</h3><p>Tekli ve toplu görev atama, salt okunur paylaşım ve karşı tarafın kabul/ret vermesi için ekranlarımızın tasarımı hazır.</p><div class="footnotice"><b>Henüz etkin değil.</b> Başka kullanıcıya gerçek görev gönderme veya başkasının ajandasına erişim, paylaşımlar için sunucu tarafı izin tabloları ve güvenlik testleri tamamlandığında açılacak. Şu anda hiçbir davet gönderilmez.</div></div></section>
+<section id="sharing" class="section">
+<div class="card"><h3>🌿 Ajandamı Paylaş</h3><p class="subtitle">Aktif Planora kullanıcısına kendi kişisel ajandanı açabilirsin. Yetkiyi istediğin an geri alabilirsin.</p>
+<form id="share-form"><label class="field">Kişinin e-posta adresi<input id="share-email" type="email" required placeholder="arkadas@ornek.com" maxlength="254"></label>
+<label class="field">Erişim düzeyi<select id="share-level"><option value="view">👀 Yalnızca görsün</option><option value="add">✏️ Görsün ve yeni kayıt eklesin</option><option value="edit">🛠️ Görsün, eklesin ve düzenlesin</option></select></label>
+<button class="btn primary" type="submit">Paylaşımı Kaydet</button> <button type="button" class="btn" id="refresh-shares">Listeyi yenile</button></form>
+<p id="share-message" class="subtitle" role="status"></p></div>
+<div class="split" style="margin-top:18px"><div class="card"><h3>🔑 Erişim Verdiğim Kişiler</h3><div id="share-outbound" class="empty">Henüz yüklenmedi</div></div>
+<div class="card"><h3>🤍 Benimle Paylaşılan Ajandalar</h3><div id="share-inbound" class="empty">Henüz yüklenmedi</div></div></div>
+<div class="card" style="margin-top:18px"><h3>📒 Paylaşılan İçerikler</h3><div id="shared-entries" class="empty">Bir ajanda seçebilirsin.</div></div>
+<div class="footnotice"><b>Bu ekran ajanda erişimi içindir.</b> Görev atama ve bilgi amaçlı tekli/toplu davet ile kabul/ret akışı ayrı bir özellik olarak geliştirilecek. Sadece kendi ajandanı paylaşırsın; karşı tarafın kişisel ajandasına otomatik erişim kazanmazsın.</div>
+</section>
 <section id="settings" class="section"><div class="card"><h3>🎨 Benim tarzım</h3><p class="subtitle">Bu sürümde renkler bu tarayıcıya kaydedilir; sonraki aşamada hesabına senkronize edilecek.</p><div class="settings-grid" id="theme-controls"></div><div class="stack" style="margin-top:18px"><button id="reset-theme" class="btn">Varsayılana dön</button></div></div></section>
-<div class="footnotice">🔒 Planora v6 • Gerçek kullanıcı hesaplarına ait görev ve notlar Supabase üzerinde saklanır. Eski yerel demo verileri içeri aktarılmaz. Dosya ekleme, paylaşım ve arka planda alarm gönderimi henüz etkin değildir.</div>
+<div class="footnotice">🔒 Planora v7 • Gerçek kullanıcı hesaplarına ait görev ve notlar Supabase üzerinde saklanır. Eski yerel demo verileri içeri aktarılmaz. Dosya ekleme, paylaşım ve arka planda alarm gönderimi henüz etkin değildir.</div>
 </main></div></div>
 <div id="modal-bg" class="overlay hidden"><div class="modal"><div class="stack" style="justify-content:space-between"><h2 id="modal-title">Yeni görev</h2><button id="close-modal" class="btn small">✕</button></div><form id="entry-form"><input id="entry-id" type="hidden"><label class="field">Kayıt türü<select id="entry-kind"><option value="task">Görev</option><option value="note">Not</option><option value="reminder">Hatırlatma</option></select></label><label class="field">Başlık<input id="entry-title" required maxlength="250"></label><label class="field">Açıklama<textarea id="entry-body"></textarea></label><label class="field">Planlanan bitiş tarihi ve saati<input id="entry-due" type="datetime-local"></label><label class="field">Öncelik<select id="entry-priority"><option value="normal">Normal</option><option value="high">🟢 Öncelikli</option><option value="low">Düşük</option></select></label><label class="field">Kart rengi<input id="entry-color" type="color" value="#fff0d2"></label><div class="stack" style="justify-content:flex-end"><button type="button" id="cancel-modal" class="btn">Vazgeç</button><button class="btn primary" type="submit">Kaydet</button></div></form></div></div>
 <div id="toast" class="toast hidden" role="status"></div>
@@ -60,7 +70,7 @@ function renderNotes(){$('note-list').innerHTML=visibleItems('note').map(x=>`<di
 function renderCalendar(){const view=$('calendar-view').value;const y=month.getFullYear(),m=month.getMonth();$('month-label').textContent=month.toLocaleDateString('tr-TR',{year:'numeric',month:view==='year'?undefined:'long'});const grouped={};visibleItems().filter(x=>x.due_at).forEach(x=>{const d=localISO(new Date(x.due_at));(grouped[d]??=[]).push(x)});const body=$('calendar-body');if(view==='year'){body.innerHTML='<div class="grid">'+Array.from({length:12},(_,i)=>`<button class="card btn" data-open-month="${i}"><b>${new Date(y,i,1).toLocaleString('tr-TR',{month:'long'})}</b><p class="muted">${Object.keys(grouped).filter(d=>d.startsWith(y+'-'+String(i+1).padStart(2,'0'))).reduce((n,d)=>n+grouped[d].length,0)} kayıt</p></button>`).join('')+'</div>';return}let dates=[];if(view==='day')dates=[new Date(y,m,month.getDate())];else if(view==='week'){let d=new Date(month),weekday=(d.getDay()+6)%7;d.setDate(d.getDate()-weekday);dates=Array.from({length:7},(_,i)=>new Date(d.getFullYear(),d.getMonth(),d.getDate()+i))}else{const offset=(new Date(y,m,1).getDay()+6)%7;dates=Array.from({length:42},(_,i)=>new Date(y,m,1-offset+i))}body.innerHTML='<div class="calendar">'+(view==='month'?['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'].map(x=>`<b class="center muted">${x}</b>`).join(''):'')+dates.map(d=>{const ds=localISO(d);return `<div class="day ${d.getMonth()!==m?'off':''} ${ds===today()?'today':''}"><b>${d.getDate()} ${view==='day'||view==='week'?d.toLocaleString('tr-TR',{month:'short'}):''}</b>${(grouped[ds]||[]).slice(0,view==='month'?3:20).map(x=>`<span class="calitem" title="${escapeHTML(x.title)}">${escapeHTML(x.title)}</span>`).join('')}</div>`}).join('')+'</div>'}
 function renderReports(){const start=$('report-from').value,end=$('report-to').value,field=$('report-date-type').value;const list=visibleItems('task').filter(x=>{const d=x[field]?.slice(0,10);return d&&(!start||d>=start)&&(!end||d<=end)});const completed=list.filter(x=>x.status==='completed').length;const metrics=[['Toplam',list.length],['Tamamlandı',completed],['Bekliyor',list.length-completed],['Gecikti',list.filter(x=>x.status!=='completed'&&x.due_at&&new Date(x.due_at)<new Date()).length]];$('report-metrics').innerHTML=metrics.map(([label,value])=>`<div class="card metric"><span class="muted">${label}</span><b>${value}</b></div>`).join('');const pct=list.length?Math.round(completed/list.length*100):0;$('report-bar').style.width=pct+'%';$('report-rate').textContent=`%${pct} tamamlandı. Rapor seçilen tarih türüne göre hesaplandı.`}
 function renderAudit(){$('audit-list').innerHTML=audits.map(x=>`<div class="taskrow"><div class="mainline"><b>${{'created':'Oluşturuldu','updated':'Güncellendi','deleted':'Kalıcı silindi'}[x.event]||escapeHTML(x.event)}</b><div class="meta">${dateText(x.happened_at)} • İşlemi yapan: ${x.actor_id===user?.id?'Sen':escapeHTML(x.actor_id||'Sistem')} • Kayıt ID: ${escapeHTML(x.entry_id)}</div></div></div>`).join('')||'<div class="empty">Henüz işlem geçmişi bulunmuyor.</div>'}
-function tabTo(t){tab=t;document.querySelectorAll('.section').forEach(el=>el.classList.toggle('current',el.id===t));document.querySelectorAll('[data-tab]').forEach(el=>el.classList.toggle('current',el.dataset.tab===t));$('page-title').textContent=titles[t]||t;render()}
+function tabTo(t){if(t==='sharing')loadShares();tab=t;document.querySelectorAll('.section').forEach(el=>el.classList.toggle('current',el.id===t));document.querySelectorAll('[data-tab]').forEach(el=>el.classList.toggle('current',el.dataset.tab===t));$('page-title').textContent=titles[t]||t;render()}
 document.querySelectorAll('[data-tab]').forEach(el=>el.onclick=()=>tabTo(el.dataset.tab));
 function openModal(kind='task',obj=null){$('entry-form').reset();$('entry-id').value=obj?.id||'';$('entry-kind').value=obj?.kind||kind;$('entry-kind').disabled=!!obj;$('entry-title').value=obj?.title||'';$('entry-body').value=obj?.body||'';$('entry-due').value=fmtInput(obj?.due_at);$('entry-priority').value=obj?.priority||'normal';$('entry-color').value=validColor(obj?.color)||'#fff0d2';$('modal-title').textContent=obj?'Kaydı düzenle':'Yeni kayıt';$('modal-bg').classList.remove('hidden')}
 function closeModal(){$('modal-bg').classList.add('hidden')}
@@ -73,5 +83,64 @@ document.addEventListener('change',async e=>{if(e.target.dataset.check){const x=
 function applyTheme(){let obj={};try{obj=JSON.parse(localStorage.getItem(storeTheme))||{}}catch{}for(const [key,,fallback] of themeFields){const val=validColor(obj[key])||fallback;document.documentElement.style.setProperty('--'+key,val);const input=$('theme-'+key);if(input)input.value=val}$('theme-controls').innerHTML=themeFields.map(([key,label,def])=>`<label class="setting-tile"><input type="color" id="theme-${key}" value="${def}" data-theme="${key}"><b>${label}</b></label>`).join('');for(const [key,,fallback] of themeFields){const obj=JSON.parse(localStorage.getItem(storeTheme)||'{}');$('theme-'+key).value=validColor(obj[key])||fallback}}
 $('theme-controls').oninput=e=>{if(!e.target.dataset.theme)return;const key=e.target.dataset.theme;let obj={};try{obj=JSON.parse(localStorage.getItem(storeTheme))||{}}catch{}obj[key]=e.target.value;localStorage.setItem(storeTheme,JSON.stringify(obj));document.documentElement.style.setProperty('--'+key,e.target.value)};
 $('reset-theme').onclick=()=>{localStorage.removeItem(storeTheme);applyTheme()};
+
+// ASAMA 5: Paylasim yalnizca sunucu tarafindan yetkilendirilmis RPC ile yonetilir.
+let shares={outbound:[],inbound:[]};
+let currentSharedOwner=null;
+function shareRole(p){return p.can_edit?'Gör / Ekle / Düzenle':p.can_add?'Gör / Ekle':'Salt okunur'}
+async function loadShares(){
+  if(!user||!profile?.activated)return;
+  const {data,error}=await sb.rpc('planora_list_calendar_shares');
+  if(error){$('share-message').textContent='Paylaşım listesi alınamadı: '+error.message;return}
+  shares={outbound:data?.outbound||[],inbound:data?.inbound||[]};
+  $('share-outbound').innerHTML=shares.outbound.length?shares.outbound.map((p,i)=>`<div class="taskrow"><div class="mainline"><b>${escapeHTML(p.email)}</b><div class="meta">${escapeHTML(shareRole(p))} • ${dateText(p.updated_at)}</div></div><div class="stack"><button class="btn small" data-share-change="${i}">Değiştir</button><button class="btn small warn" data-share-revoke="${i}">İzni kaldır</button></div></div>`).join(''):'<div class="empty">Henüz kimseye erişim vermedin.</div>';
+  $('share-inbound').innerHTML=shares.inbound.length?shares.inbound.map((p,i)=>`<div class="taskrow"><div class="mainline"><b>${escapeHTML(p.email)}</b><div class="meta">${escapeHTML(shareRole(p))}</div></div><button class="btn small primary" data-share-open="${i}">Ajandayı aç</button></div>`).join(''):'<div class="empty">Henüz seninle paylaşılan ajanda yok.</div>';
+  if(currentSharedOwner&&!shares.inbound.some(p=>p.owner_id===currentSharedOwner)){$('shared-entries').innerHTML='<div class="empty">Ajandaya erişimin sona erdi.</div>';currentSharedOwner=null}
+}
+async function manageShare(email,level,revoke=false){
+  const {data,error}=await sb.rpc('planora_share_with_email',{
+    target_email:email,allow_view:true,allow_add:level!=='view',allow_edit:level==='edit',revoke_access:revoke
+  });
+  if(error)throw error;
+  if(!data?.ok)throw new Error('İzin kaydedilemedi');
+}
+$('share-form').addEventListener('submit',async e=>{
+  e.preventDefault();if(inFlight)return;
+  const email=$('share-email').value.trim(),level=$('share-level').value;
+  if(!confirm(`${email} adresine ${level==='view'?'salt okunur':level==='add'?'görüntüleme ve ekleme':'görüntüleme, ekleme ve düzenleme'} yetkisi verilsin mi?`))return;
+  busy(true);try{await manageShare(email,level);$('share-message').textContent='Paylaşım izni kaydedildi 🌿';$('share-form').reset();await loadShares()}
+  catch(err){$('share-message').textContent='İşlem başarısız: '+err.message}finally{busy(false)}
+});
+$('refresh-shares').onclick=loadShares;
+async function openShared(p){
+  currentSharedOwner=p.owner_id;
+  $('shared-entries').innerHTML='<div class="loading">Ajanda açılıyor…</div>';
+  const {data,error}=await sb.from('planora_entries').select('id,owner_id,created_by,kind,title,body,due_at,priority,status,created_at,deleted_at').eq('owner_id',p.owner_id).is('deleted_at',null).order('created_at',{ascending:false}).limit(500);
+  if(error){$('shared-entries').textContent='Bu ajandaya erişilemedi: '+error.message;return}
+  $('shared-entries').innerHTML=`<div class="stack" style="justify-content:space-between"><b>${escapeHTML(p.email)} • ${escapeHTML(shareRole(p))}</b>${p.can_add?'<button class="btn small primary" id="shared-add-entry">＋ Kayıt ekle</button>':''}</div>`+
+    (data||[]).map(x=>`<div class="taskrow"><div class="mainline"><b>${escapeHTML(x.title)}</b><div class="meta">${x.kind==='note'?'Not':x.kind==='reminder'?'Hatırlatma':'Görev'} • ${dateText(x.due_at)} • ${x.status==='completed'?'Tamamlandı':'Bekliyor'} • Ekleyen kişi ID: ${escapeHTML(x.created_by||'Kayıt yok')}</div><p>${escapeHTML(x.body)}</p>${p.can_edit?`<button class="btn small" data-shared-edit="${x.id}">Düzenle</button>`:''}</div>`).join('')||'<div class="empty">Henüz içerik yok.</div>';
+  if(p.can_add){const add=$('shared-add-entry');if(add)add.onclick=()=>openSharedEditor(null,p)}
+  $('shared-entries').querySelectorAll('[data-shared-edit]').forEach(btn=>{
+    btn.onclick=()=>openSharedEditor((data||[]).find(x=>x.id===btn.dataset.sharedEdit),p)
+  });
+}
+async function openSharedEditor(x,p){
+  if(!p.can_add&&!p.can_edit)return;
+  const title=prompt(x?'Görevin / notun yeni başlığı':'Yeni kaydın başlığı',x?.title||'');
+  if(title===null||!title.trim())return;
+  const body=prompt('Açıklama',x?.body||'');if(body===null)return;
+  let result;
+  if(x){if(!p.can_edit)return;result=await sb.from('planora_entries').update({title:title.trim(),body}).eq('id',x.id).eq('owner_id',p.owner_id)}
+  else{result=await sb.from('planora_entries').insert({owner_id:p.owner_id,kind:'task',title:title.trim(),body,priority:'normal'})}
+  if(result.error){toast('Kaydedilemedi: '+result.error.message);return}
+  toast('Ajandaya kaydedildi 🌿');await openShared(p);
+}
+document.addEventListener('click',async e=>{
+  const btn=e.target.closest('button');if(!btn)return;
+  if(btn.dataset.shareChange!==undefined){const p=shares.outbound[Number(btn.dataset.shareChange)];if(!p)return;$('share-email').value=p.email;$('share-level').value=p.can_edit?'edit':p.can_add?'add':'view';$('share-email').focus();toast('Yetkiyi seçip Paylaşımı Kaydet butonuna bas.')}
+  if(btn.dataset.shareRevoke!==undefined){const p=shares.outbound[Number(btn.dataset.shareRevoke)];if(!p||!confirm(`${p.email} erişimi kaldırılsın mı?`))return;try{await manageShare(p.email,'view',true);toast('Erişim kaldırıldı');await loadShares()}catch(err){toast(err.message)}}
+  if(btn.dataset.shareOpen!==undefined){const p=shares.inbound[Number(btn.dataset.shareOpen)];if(p)await openShared(p)}
+});
+
 (function start(){const y=new Date().getFullYear(),m=String(new Date().getMonth()+1).padStart(2,'0');$('report-from').value=y+'-'+m+'-01';$('report-to').value=today();applyTheme();refreshAuth().catch(err=>{show('auth');msg('auth-message',err.message)})})();
 </script></body></html>
