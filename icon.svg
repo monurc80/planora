@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Planora uygulama simgesi">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7F9A85"/><stop offset="1" stop-color="#4A6B5B"/></linearGradient></defs>
+<rect width="512" height="512" rx="112" fill="url(#bg)"/>
+<circle cx="256" cy="252" r="160" fill="#FAF6F0" opacity=".98"/>
+<circle cx="256" cy="252" r="143" fill="none" stroke="#D48C73" stroke-width="10" opacity=".75"/>
+<path d="M195 337V177h75c53 0 86 29 86 78s-33 78-86 78h-30" fill="none" stroke="#4A6B5B" stroke-width="39" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M245 297c42-3 68-22 83-47-28-2-54 9-83 47Z" fill="#D48C73"/>
+<path d="M265 305c17 19 38 26 60 25-9-23-31-31-60-25Z" fill="#77967B"/>
+<path d="M245 310c29-7 48-16 65-34" fill="none" stroke="#4A6B5B" stroke-width="6" stroke-linecap="round"/>
+</svg>
