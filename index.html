@@ -171,6 +171,40 @@
 #reports .v9-table tbody td{background:#fbf8f0}
 @media(max-width:850px){.task-select-toolbar{align-items:flex-start}.task-select-toolbar h3{font-size:22px}#task-list .taskrow{padding:15px 12px;gap:10px}#task-list .taskrow h3{font-size:17px}#task-list .taskrow .stack{gap:5px}#task-list .taskrow .btn{font-size:11px;padding:7px 8px}.task-complete-control{font-size:11px;padding:8px 9px}#task-list .taskrow .mainline{flex-basis:55%}}
 @media(max-width:500px){.task-select-toolbar{gap:8px}.task-selection-toggle{font-size:12px;padding:9px 10px}#task-list .taskrow .mainline{flex-basis:60%}#task-list .taskrow .stack{width:100%;justify-content:flex-end}.task-complete-control span{font-size:11px}}
+
+/* Planora v15.9 – kullanıcının özgün adaçayı / krem / terakota tasarım rehberi */
+:root{
+ --primary-bg:var(--nav);--sidebar-hover:#3B5547;
+ --page-bg:var(--bg);--card-bg:var(--card);
+ --accent-color:var(--accent);--text-main:var(--ink);
+ --paper-shadow:0 8px 18px #62553e1c,0 2px 4px #62553e0d;
+ --paper-outline:#e3dac8;
+}
+body{color:var(--text-main);background:var(--page-bg)}
+.sidebar{background:linear-gradient(170deg,color-mix(in srgb,var(--primary-bg),#d6d2b4 22%),var(--primary-bg) 75%);color:#fff9ef}
+.brand{font-family:Georgia,'Times New Roman',serif;letter-spacing:.3px}
+.sidebar .nav-btn.current{background:#ffffff2b;border-left:5px solid var(--accent-color)}
+.sidebar .nav-btn:hover{background:color-mix(in srgb,var(--sidebar-hover),#fff 10%)}
+.page{background:radial-gradient(ellipse at 74% 0%,#fff8ecbb,transparent 55%),var(--page-bg)}
+.header{background:var(--card-bg);border-bottom:1px solid var(--paper-outline)}
+.header h2{font:600 clamp(21px,2.5vw,29px)/1.2 Georgia,'Times New Roman',serif}
+.content>.section>.card,.content .card,.invite-card,.note,.taskrow{background-color:var(--card-bg);border:1px solid var(--paper-outline);box-shadow:var(--paper-shadow);border-radius:23px}
+.content .card h3,.content .section h3{color:var(--text-main)}
+.btn.primary{background:var(--accent-color)!important;border-color:var(--accent-color)!important;color:#fff!important}
+.btn:not(.primary){border-color:#d9d7c9}
+#metrics .metric,#report-metrics .metric{border:1px solid var(--paper-outline);background:var(--card-bg);box-shadow:var(--paper-shadow)}
+#metrics .metric:nth-child(4),#report-metrics .metric:nth-child(4){background:linear-gradient(to bottom,color-mix(in srgb,var(--accent-color),#fff 35%) 0 33%,var(--card-bg) 33%)}
+#metrics .metric .muted,#report-metrics .metric .muted{font:normal 16px Georgia,'Times New Roman',serif}
+#metrics .metric b,#report-metrics .metric b{font:600 35px Georgia,'Times New Roman',serif}
+#task-list .taskrow,#focus-list .taskrow{background:var(--card-bg);border-color:var(--paper-outline)}
+#notes .note{border-radius:23px}
+#calendar-body .day{border:1px solid var(--paper-outline);background:var(--card-bg);border-radius:17px;box-shadow:0 2px 8px #584c3010}
+#calendar-body .day.today{border:2px solid var(--accent-color)}
+#calendar-body .day.off{opacity:.43}
+#reports .v9-table tbody td{background:var(--card-bg)}
+#reports .v9-table tbody tr:hover td{background:color-mix(in srgb,var(--card-bg),#dce8d6 35%)}
+.task-bulk-tools{background:color-mix(in srgb,var(--page-bg),#d7e7d0 35%)!important}
+@media(max-width:850px){#metrics .metric b,#report-metrics .metric b{font-size:29px}.content{padding-top:18px}}
 </style></head><body>
 <div id="boot" class="loading">Planora hazırlanıyor… İnternet bağlantısı gerekli.</div>
 <div id="auth" class="auth-page hidden"><div class="card auth-panel"><h1>🌿 Planora</h1><p class="subtitle">Küçük notlar, büyük kolaylıklar. Kişisel ajandana hoş geldin.</p><div class="tabs"><button class="btn active" data-auth-tab="login">Giriş Yap</button><button class="btn" data-auth-tab="signup">Kayıt Ol</button></div><form id="authform"><label id="namelabel" class="field hidden">Adın<input id="display-name" maxlength="80" autocomplete="name"></label><label class="field">E-posta<input id="email" type="email" required autocomplete="email"></label><label class="field">Şifre<input id="password" type="password" required minlength="8" autocomplete="current-password"></label><button class="btn primary" id="auth-submit" type="submit">Giriş Yap</button></form><p id="auth-message" class="subtitle" role="status"></p><button id="forgot" class="btn small">Şifremi unuttum</button><div id="recovery" class="hidden"><label class="field">Yeni şifre<input id="new-password" type="password" minlength="8"></label><button id="save-new-password" class="btn primary">Yeni şifreyi kaydet</button><p id="recovery-message" class="subtitle"></p></div><p class="footnotice">Yeni kullanıcı kaydında önce e-posta doğrulaması, ardından yöneticinin sana ileteceği 4 haneli kod gerekir. Kayıt olmak, başkasının ajandasına erişim sağlamaz.</p></div></div>
