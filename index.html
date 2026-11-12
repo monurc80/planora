@@ -315,7 +315,7 @@ document.addEventListener('click',async e=>{
  if(b?.dataset.detailEdit){const {obj,shareInfo}=detailRecord||{};if(!obj)return;closeDetail();if(shareInfo){await openSharedEditor(obj,{owner_id:obj.owner_id,can_add:false,can_edit:shareInfo.can_edit})}else openModal(obj.kind,obj);return}
  if(b?.dataset.detailDelete){const id=b.dataset.detailDelete;closeDetail();if(confirm('Kayıt çöp kutusuna taşınsın mı?'))await updateEntry(id,{deleted_at:new Date().toISOString()});return}
  if(b?.dataset.noteShare){const id=b.dataset.noteShare;if(!items.some(x=>x.id===id&&x.kind==='note'&&!x.deleted_at))return toast('Not bulunamadı.');selectedEntryIds.add(id);selectionCount();if(detailRecord)closeDetail();tabTo('sharing');$('entry-share-email').focus();return}
- if(b?.dataset.noteAssign){const id=b.dataset.noteAssign;const obj=items.find(x=>x.id===id&&x.kind==='note'&&!x.deleted_at);if(!obj)return toast('Not bulunamadı.');const recipient=prompt('Not üzerinde çalışacak kişinin e-posta adresi:', $('entry-share-email').value||'');if(recipient===null)return;const email=recipient.trim();if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email))return toast('Geçerli bir e-posta adresi gir.');if(!confirm('Bu kişi '+obj.title+' notunu kabul ettiğinde orijinal metni değiştirmeden yalnızca kendi ek notlarını yazabilecek. Gönderilsin mi?'))return;const {error}=await sb.rpc('planora_share_selected_entries',{target_email:email,entry_ids:[id],allow_edit:true});if(error)throw error;if(detailRecord)closeDetail();toast('Not üzerinde çalışma daveti oluşturuldu. Alıcı uygulamada kabul edebilir.');await loadEntryShares();return}
+ if(b?.dataset.noteAssign){const id=b.dataset.noteAssign;const obj=items.find(x=>x.id===id&&x.kind==='note'&&!x.deleted_at);if(!obj)return toast('Not bulunamadı.');const recipient=prompt('Not üzerinde çalışacak kişinin e-posta adresi:', $('entry-share-email').value||'');if(recipient===null)return;const email=recipient.trim();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return toast('Geçerli bir e-posta adresi gir.');if(!confirm('Bu kişi '+obj.title+' notunu kabul ettiğinde orijinal metni değiştirmeden yalnızca kendi ek notlarını yazabilecek. Gönderilsin mi?'))return;const {error}=await sb.rpc('planora_share_selected_entries',{target_email:email,entry_ids:[id],allow_edit:true});if(error)throw error;if(detailRecord)closeDetail();toast('Not üzerinde çalışma daveti oluşturuldu. Alıcı uygulamada kabul edebilir.');await loadEntryShares();return}
  if(b?.dataset.detailShare){selectedEntryIds.add(b.dataset.detailShare);selectionCount();closeDetail();tabTo('sharing');return}
  if(b?.dataset.detailAssign){selectedTaskIds.add(b.dataset.detailAssign);closeDetail();$('invite-selected-label').textContent='1 görev gönderilecek';$('invite-modal').classList.remove('hidden');return}
  const row=e.target.closest('[data-detail],[data-activity-detail]');if(!row||e.target.closest('button,input,select,textarea,a,label'))return;
@@ -398,48 +398,73 @@ setInterval(()=>{if(user&&profile?.activated)loadNotifications()},30000);
 const origTabTo=tabTo;tabTo=function(t){origTabTo(t);if(t==='sharing')loadContacts();if(t==='focus')loadNotifications()};
 // v15.2 — Konuşarak yaz: ses dosyası saklamaz, tanınan sözcükleri seçilen alana yazar.
 // SpeechRecognition bazı tarayıcılarda uzaktaki konuşma tanıma servisini kullanabilir.
-const PlanoraRecognition=globalThis.SpeechRecognition||globalThis.webkitSpeechRecognition;
+const PlanoraRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
 let dictationSession=null;
 function stopDictation(){
   if(!dictationSession)return;
   const old=dictationSession;dictationSession=null;
   old.btn.classList.remove('is-listening');old.btn.textContent='🎙️ Konuşarak yaz';
-  old.status.textContent='Dikte durduruldu. Metni kontrol edip düzenleyebilirsin.';
   try{old.recognition.stop()}catch{}
 }
 function installDictationControl(fieldId){
   const field=$(fieldId);if(!field)return;
-  const row=document.createElement('div');row.className='dictation-control';row.classList.add('speech-dictation');
-  const btn=document.createElement('button');btn.type='button';btn.className='dictation-btn';btn.textContent='🎙️ Konuşarak yaz';
+  const row=document.createElement('div');row.className='dictation-control speech-dictation';
+  const btn=document.createElement('button');btn.type='button';btn.className='dictation-btn';
+  btn.textContent=PlanoraRecognition?'🎙️ Konuşarak yaz':'🎤 Klavye diktesini kullan';
   const status=document.createElement('span');status.className='dictation-status';status.setAttribute('role','status');
-  status.textContent=PlanoraRecognition?'Türkçe konuşmayı metne çevirir.':'Bu tarayıcıda konuşarak yazma desteklenmiyor.';
-  btn.disabled=!PlanoraRecognition;row.append(btn,status);field.insertAdjacentElement('afterend',row);
+  status.textContent=PlanoraRecognition?'Türkçe konuşma tanıma; başlatınca mikrofon izni ver.':'Bu tarayıcı doğrudan ses tanımayı sunmuyor. Metin kutusuna dokun ve klavyedeki mikrofon tuşunu kullan (Mac: sistem Dikte kısayolu).';
+  row.append(btn,status);field.insertAdjacentElement('afterend',row);
   btn.addEventListener('click',()=>{
-    if(dictationSession?.btn===btn){stopDictation();return}
-    if(!PlanoraRecognition)return;
-    if(voiceRecorder?.state==='recording')return toast('Ses kaydını durdurduktan sonra konuşarak yazmayı başlat.');
+    field.focus();
+    if(!PlanoraRecognition){
+      status.textContent='iPhone/iPad: klavye mikrofonuna dokun. Mac: Sistem Ayarları → Klavye → Dikte bölümünü aç ve Dikte kısayoluna bas.';
+      return;
+    }
+    if(dictationSession?.btn===btn){stopDictation();status.textContent='Dikte durduruldu. Metni kontrol et.';return}
+    if(voiceRecorder?.state==='recording'){toast('Önce ses kaydını durdur.');return}
     stopDictation();
-    const recog=new PlanoraRecognition();recog.lang='tr-TR';recog.continuous=true;recog.interimResults=true;
-    const original=field.value,joiner=original&& !/\s$/.test(original)?' ':'';
-    const session={recognition:recog,btn,status};dictationSession=session;
-    recog.onstart=()=>{if(dictationSession!==session)return;btn.classList.add('is-listening');btn.textContent='⏹ Dikteyi durdur';status.textContent='Dinliyorum… Söylediklerin metin alanına yazılacak.'};
-    recog.onresult=event=>{
+    let recognition;
+    try{recognition=new PlanoraRecognition()}catch(err){status.textContent='Konuşma tanıma açılamadı. Klavye diktesini kullan.';return}
+    recognition.lang='tr-TR';
+    recognition.continuous=false; // Safari ve iOS uyumluluğu için kısa dinleme oturumları
+    recognition.interimResults=true;
+    recognition.maxAlternatives=1;
+    const original=field.value;
+    const joiner=original && !/\s$/.test(original)?' ':'';
+    const session={recognition,btn,status,error:false};dictationSession=session;
+    status.textContent='Mikrofon başlatılıyor…';
+    recognition.onstart=()=>{if(dictationSession!==session)return;btn.classList.add('is-listening');btn.textContent='⏹ Durdur';status.textContent='Dinliyorum… Konuşmaya başla.'};
+    recognition.onresult=event=>{
       if(dictationSession!==session)return;
-      let final='',interim='';
-      for(let i=0;i<event.results.length;i++){
-        const r=event.results[i];const value=r[0]?.transcript||'';
-        if(r.isFinal)final+=value+' ';else interim+=value;
+      let final='',partial='';
+      for(let j=0;j<event.results.length;j++){
+        const result=event.results[j],part=result[0]?.transcript||'';
+        if(result.isFinal)final+=part+' ';else partial+=part;
       }
-      field.value=original+joiner+(final+interim).trim();
+      const text=(final+partial).trim();
+      field.value=original+joiner+text;
       field.dispatchEvent(new Event('input',{bubbles:true}));
+      status.textContent=text?'Metin yazılıyor… Devam etmek için bitince tekrar dokunabilirsin.':'Dinliyorum…';
     };
-    recog.onerror=event=>{
+    recognition.onerror=event=>{
+      if(dictationSession!==session)return;session.error=true;
+      const messages={
+        'not-allowed':'Mikrofon izni reddedildi. Safari site izinlerinde Mikrofonu etkinleştir veya klavye diktesini kullan.',
+        'service-not-allowed':'Tarayıcının konuşma tanıma servisi kullanılamıyor. Klavye diktesini dene.',
+        'network':'Konuşma tanıma servisine bağlanılamadı. İnterneti kontrol et veya klavye diktesini kullan.',
+        'audio-capture':'Mikrofona erişilemiyor. Sistem mikrofon ayarlarını kontrol et.',
+        'no-speech':'Ses algılanmadı. Yeniden dokunup konuşabilirsin.',
+        'language-not-supported':'Türkçe tanıma desteklenmiyor. Klavye diktesini kullan.',
+        'aborted':'Dikte durduruldu.'
+      };
+      status.textContent=messages[event.error]||'Konuşma tanıma hatası: '+String(event.error);
+    };
+    recognition.onend=()=>{
       if(dictationSession!==session)return;
-      status.textContent=event.error==='not-allowed'?'Mikrofon izni reddedildi. Tarayıcı ayarlarını kontrol et.':
-        event.error==='no-speech'?'Konuşma algılanmadı. Yeniden deneyebilirsin.':'Konuşma tanıma hatası: '+event.error;
+      dictationSession=null;btn.classList.remove('is-listening');btn.textContent='🎙️ Konuşarak yaz';
+      if(!session.error)status.textContent='Dikte tamamlandı. Devam etmek için tekrar tıkla. Metni kontrol et.';
     };
-    recog.onend=()=>{if(dictationSession!==session)return;dictationSession=null;btn.classList.remove('is-listening');btn.textContent='🎙️ Konuşarak yaz';if(status.textContent.startsWith('Dinliyorum'))status.textContent='Dikte tamamlandı. Kaydetmeden önce metni kontrol et.'};
-    try{recog.start()}catch(e){dictationSession=null;btn.classList.remove('is-listening');btn.textContent='🎙️ Konuşarak yaz';status.textContent='Dikte başlatılamadı: '+e.message}
+    try{recognition.start()}catch(err){dictationSession=null;btn.classList.remove('is-listening');btn.textContent='🎙️ Konuşarak yaz';status.textContent='Başlatılamadı: '+err.message+'. Klavye diktesini dene.'}
   });
 }
 ['entry-title','entry-body','comment-text'].forEach(installDictationControl);
