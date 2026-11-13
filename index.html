@@ -685,7 +685,7 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 #app .section.monenda-short .taskrow .mainline p,
 #app .section.monenda-short .note-grid .note .note-body{display:none!important}
 
-/* Monenda v20.5 — Kısa görünüm: görevlerde tablo düzeni */
+/* Monenda v20.6 — Kısa görünüm: görevlerde tablo düzeni */
 #app #tasks.monenda-short #task-list{overflow-x:auto;border:1px solid #e6ddcf;border-radius:22px;background:#fffaf3;padding:8px 16px;box-shadow:0 4px 16px #705c3810}
 #app #tasks.monenda-short .monenda-short-table{width:100%;min-width:900px;border-collapse:collapse;table-layout:auto}
 #app #tasks.monenda-short .monenda-short-table th{padding:15px 12px;text-align:left;color:#83917e;font:700 13px Georgia,serif;letter-spacing:.035em;white-space:nowrap;border-bottom:2px solid #e8dfd2}
@@ -702,6 +702,20 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 #app #tasks.monenda-short .monenda-short-table-wrap{display:block}
 #app #tasks.monenda-detailed .monenda-short-table-wrap{display:none}
 @media(max-width:700px){#app #tasks.monenda-short #task-list{padding:6px 10px}#app #tasks.monenda-short .monenda-short-table th{font-size:11px;padding:12px 9px}#app #tasks.monenda-short .monenda-short-table td{font-size:12px;padding:14px 9px}}
+
+
+/* Monenda v20.6 — Kısa görünüm: ana sayfa kutucuklarında yalnız başlık, tarih, durum */
+#app #focus.monenda-short .focus-collection .focus-panel-heading .subtitle,
+#app #focus.monenda-short .focus-collection .focus-sort-label{display:none!important}
+#app #focus.monenda-short .focus-collection .focus-entry{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:5px 12px!important;padding:12px 16px!important;min-height:0!important}
+#app #focus.monenda-short .focus-collection .focus-entry-heading{display:block!important;flex:1 1 100%!important;margin:0!important}
+#app #focus.monenda-short .focus-collection .focus-entry-heading strong{font-size:15px!important;line-height:1.35!important}
+#app #focus.monenda-short .focus-collection .focus-entry>p{display:none!important}
+#app #focus.monenda-short .focus-collection .focus-entry-date{display:block!important;flex:1 1 auto!important;margin:3px 0 0!important;font-size:12px!important;line-height:1.4!important}
+#app #focus.monenda-short .focus-collection .monenda-card-actions{display:flex!important;align-items:center!important;gap:7px!important;flex:0 0 auto!important;margin-top:3px!important}
+#app #focus.monenda-short .focus-collection .monenda-status-badge{display:inline-flex!important}
+#app #focus.monenda-short .focus-collection .focus-entry-note .focus-entry-date{display:block!important}
+#app #settings .push-settings{margin-top:18px}
 
 </style></head><body>
 <div id="boot" class="loading">Monenda hazırlanıyor… İnternet bağlantısı gerekli.</div>
@@ -728,7 +742,7 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 </section>
 <section id="invitations" class="section hidden" aria-hidden="true"><div class="card"><h3>📮 Görev Takibi</h3><p class="subtitle">Gönderilen görevleri alıcı önce inceler. Kabul edilen atamalar üzerinde çalışabilir; bilgi amaçlı paylaşımlar her zaman salt okunurdur.</p><button class="btn" id="refresh-invitations">↻ Davetleri yenile</button><p id="invitation-message" class="subtitle" role="status"></p></div><div class="invite-grid" style="margin-top:17px"><div class="card"><h3>📥 Bana gelenler</h3><div id="invite-inbox"></div></div><div class="card"><h3>📤 Gönderdiklerim</h3><div id="invite-outbox"></div></div></div></section>
 <section id="settings" class="section"><div class="card"><h3>🎨 Benim tarzım</h3><p class="subtitle">Bu sürümde renkler bu tarayıcıya kaydedilir; sonraki aşamada hesabına senkronize edilecek.</p><div class="settings-grid" id="theme-controls"></div><div class="stack" style="margin-top:18px"><button id="reset-theme" class="btn">Varsayılana dön</button></div></div></section>
-<div class="footnotice version-footer">Monenda v20.5</div>
+<div class="footnotice version-footer">Monenda v20.6</div>
 </main></div></div>
 <div id="notifications-backdrop" class="overlay hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="notifications-heading"><div class="modal detail-sheet"><div class="stack" style="justify-content:space-between"><h2 id="notifications-heading">🔔 Bildirimlerim</h2><button id="notifications-close" type="button" class="btn small">✕</button></div><div id="notifications-list"></div><button id="notifications-read" class="btn small" type="button">Hepsini okundu işaretle</button></div></div>
 <div id="metric-backdrop" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="metric-heading"><div class="modal detail-sheet"><div class="stack" style="justify-content:space-between"><h2 id="metric-heading">Kayıtlar</h2><button id="metric-close" class="btn small" type="button">✕</button></div><p id="metric-subtitle" class="subtitle"></p><div id="metric-results" class="metric-results"></div></div></div>
@@ -921,10 +935,12 @@ function homeEntryCard(x){
  const when=type==='task'?'Bitiş':type==='event'?'Etkinlik':'Eklenme';
  const date=type==='note'?x.created_at:x.due_at;
  const description=String(x.body||'');
+ const state=type==='task'?monendaTaskStatus(x):type==='event'?monendaEventStatus(x):'';
  return `<article class="focus-entry entry-open focus-entry-${type}" tabindex="0" role="button" data-detail="${x.id}">
   <div class="focus-entry-heading"><span aria-hidden="true">${icon}</span><strong>${escapeHTML(x.title)}</strong></div>
   ${description?`<p>${escapeHTML(description.slice(0,145))}${description.length>145?'…':''}</p>`:''}
   <div class="focus-entry-date">${when}: ${date?dateText(date):'Belirlenmedi'}${type==='task'&&x.priority==='high'?' · Öncelikli':''}</div>
+  ${type==='task'?'<div class="monenda-card-actions">'+(state==='overdue'?monendaBadge(x):'')+'<button type="button" class="btn small" data-edit="'+escapeHTML(x.id)+'">Düzenle</button>'+monendaTaskSelect(x)+'</div>':type==='event'?'<div class="monenda-card-actions">'+monendaBadge(x)+'</div>':''}
   </article>`;
 }
 function renderHomePanels(){
@@ -1528,7 +1544,7 @@ monendaSyncView=function(){monendaPriorSync();document.getElementById('metric-ba
 monendaSyncView();
 
 
-/* Monenda v20.5 — Kısa görev listesi tablo görünümü; detaylı görünüm orijinal kartları korur */
+/* Monenda v20.6 — Kısa görev listesi tablo görünümü; detaylı görünüm orijinal kartları korur */
 const monendaRenderTasksOriginal=renderTasks;
 renderTasks=function(){
  monendaRenderTasksOriginal();
@@ -1564,6 +1580,19 @@ renderTasks=function(){
 };
 const monendaRenderBeforeShortToggle=render;
 render=function(){monendaRenderBeforeShortToggle();if(tab==='tasks'&&document.getElementById('tasks').classList.contains('monenda-short'))monendaSyncView()};
+
+
+/* Monenda v20.6 — Bildirim tercihlerini Kişiselleştirme bölümüne taşı */
+(function(){
+ const push=document.getElementById('push-settings');
+ const settings=document.getElementById('settings');
+ if(push&&settings&&!settings.contains(push)){
+   settings.appendChild(push);
+   const heading=push.querySelector('.push-settings-copy strong');
+   if(heading)heading.textContent='🔔 Bildirim tercihleri';
+ }
+ if(typeof monendaSyncView==='function')monendaSyncView();
+})();
 
 </script><script>
 /* PWA: yalnızca çevrimdışı bilgilendirme sayfası saklanır; Supabase oturumu/verileri saklanmaz. */
