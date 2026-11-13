@@ -717,6 +717,33 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 #app #focus.monenda-short .focus-collection .focus-entry-note .focus-entry-date{display:block!important}
 #app #settings .push-settings{margin-top:18px}
 
+
+/* Monenda v20.7 — ana sayfa Kısa görünümü: yalnızca işaretlenen bilgiler */
+#app #focus.monenda-short .focus-collection .focus-entry{
+ display:flex!important;flex-wrap:wrap!important;align-items:center!important;
+ gap:6px 12px!important;padding:13px 16px!important;min-height:0!important;
+}
+#app #focus.monenda-short .focus-collection .focus-entry-heading{
+ display:block!important;flex:1 1 100%!important;margin:0!important;
+}
+#app #focus.monenda-short .focus-collection .focus-entry-heading strong{
+ font-size:15px!important;line-height:1.35!important;
+}
+#app #focus.monenda-short .focus-collection .focus-entry>p{display:none!important}
+#app #focus.monenda-short .focus-collection .focus-entry>.focus-entry-date{
+ display:block!important;flex:1 1 auto!important;margin:3px 0 0!important;
+ font-size:12px!important;line-height:1.4!important;
+}
+#app #focus.monenda-short .focus-collection .focus-entry>.monenda-card-actions{
+ display:flex!important;flex:0 0 auto!important;align-items:center!important;
+ gap:7px!important;margin:3px 0 0!important;
+}
+#app #focus.monenda-short .focus-collection .focus-entry .monenda-status-badge{
+ display:inline-flex!important;align-items:center!important;
+}
+#app #focus.monenda-short .focus-collection .focus-panel-heading .subtitle,
+#app #focus.monenda-short .focus-collection .focus-sort-label{display:none!important}
+
 </style></head><body>
 <div id="boot" class="loading">Monenda hazırlanıyor… İnternet bağlantısı gerekli.</div>
 <div id="auth" class="auth-page hidden"><div class="card auth-panel"><h1>🌿 Monenda</h1><p class="subtitle">Küçük notlar, büyük kolaylıklar. Kişisel ajandana hoş geldin.</p><div class="tabs"><button class="btn active" data-auth-tab="login">Giriş Yap</button><button class="btn" data-auth-tab="signup">Kayıt Ol</button></div><form id="authform"><label id="namelabel" class="field hidden">Adın<input id="display-name" maxlength="80" autocomplete="name"></label><label class="field">E-posta<input id="email" type="email" required autocomplete="email"></label><label class="field">Şifre<input id="password" type="password" required minlength="8" autocomplete="current-password"></label><button class="btn primary" id="auth-submit" type="submit">Giriş Yap</button></form><p id="auth-message" class="subtitle" role="status"></p><button id="forgot" class="btn small">Şifremi unuttum</button><div id="recovery" class="hidden"><label class="field">Yeni şifre<input id="new-password" type="password" minlength="8"></label><button id="save-new-password" class="btn primary">Yeni şifreyi kaydet</button><p id="recovery-message" class="subtitle"></p></div><p class="footnotice">Yeni kullanıcı kaydında önce e-posta doğrulaması, ardından yöneticinin sana ileteceği 4 haneli kod gerekir. Kayıt olmak, başkasının ajandasına erişim sağlamaz.</p></div></div>
@@ -742,7 +769,7 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 </section>
 <section id="invitations" class="section hidden" aria-hidden="true"><div class="card"><h3>📮 Görev Takibi</h3><p class="subtitle">Gönderilen görevleri alıcı önce inceler. Kabul edilen atamalar üzerinde çalışabilir; bilgi amaçlı paylaşımlar her zaman salt okunurdur.</p><button class="btn" id="refresh-invitations">↻ Davetleri yenile</button><p id="invitation-message" class="subtitle" role="status"></p></div><div class="invite-grid" style="margin-top:17px"><div class="card"><h3>📥 Bana gelenler</h3><div id="invite-inbox"></div></div><div class="card"><h3>📤 Gönderdiklerim</h3><div id="invite-outbox"></div></div></div></section>
 <section id="settings" class="section"><div class="card"><h3>🎨 Benim tarzım</h3><p class="subtitle">Bu sürümde renkler bu tarayıcıya kaydedilir; sonraki aşamada hesabına senkronize edilecek.</p><div class="settings-grid" id="theme-controls"></div><div class="stack" style="margin-top:18px"><button id="reset-theme" class="btn">Varsayılana dön</button></div></div></section>
-<div class="footnotice version-footer">Monenda v20.6</div>
+<div class="footnotice version-footer">Monenda v20.7</div>
 </main></div></div>
 <div id="notifications-backdrop" class="overlay hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="notifications-heading"><div class="modal detail-sheet"><div class="stack" style="justify-content:space-between"><h2 id="notifications-heading">🔔 Bildirimlerim</h2><button id="notifications-close" type="button" class="btn small">✕</button></div><div id="notifications-list"></div><button id="notifications-read" class="btn small" type="button">Hepsini okundu işaretle</button></div></div>
 <div id="metric-backdrop" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="metric-heading"><div class="modal detail-sheet"><div class="stack" style="justify-content:space-between"><h2 id="metric-heading">Kayıtlar</h2><button id="metric-close" class="btn small" type="button">✕</button></div><p id="metric-subtitle" class="subtitle"></p><div id="metric-results" class="metric-results"></div></div></div>
@@ -1408,17 +1435,7 @@ function monendaTaskSelect(x){
  '<option value="pending" '+(status==='pending'?'selected':'')+'>Beklemede</option>'+
  '<option value="completed" '+(status==='completed'?'selected':'')+'>Tamamlandı</option></select>';
 }
-// Anasayfadaki küçük kartlar
-const monendaPreviousHomeEntryCard=homeEntryCard;
-homeEntryCard=function(x){
- let html=monendaPreviousHomeEntryCard(x);
- if(x.kind==='task'){
-  html=html.replace('</article>','<div class="monenda-card-actions">'+(monendaTaskStatus(x)==='overdue'?monendaBadge(x):'')+'<button type="button" class="btn small" data-edit="'+escapeHTML(x.id)+'">Düzenle</button>'+monendaTaskSelect(x)+'</div></article>');
- }else if(x.kind==='event'){
-  html=html.replace('</article>','<div class="monenda-card-actions">'+monendaBadge(x)+'</div></article>');
- }
- return html;
-};
+// Ana sayfa kartları: temel homeEntryCard zaten tekil durum ve düzenleme kontrollerini üretir.
 // Görevler sayfasının büyük kartları, mevcut seçim kutularını koru
 const monendaPreviousTaskHTML=taskHTML;
 taskHTML=function(arr,selectable=false){
