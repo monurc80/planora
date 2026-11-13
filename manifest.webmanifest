@@ -1,33 +1,21 @@
 {
   "id": "/planora/",
-  "name": "Planora – Dijital Ajanda",
-  "short_name": "Planora",
-  "description": "Görevlerini, notlarını, hatırlatmalarını ve takvimini tek bir yerde yönet.",
+  "name": "Monenda – Dijital Ajanda",
+  "short_name": "Monenda",
+  "description": "Görevlerini, notlarını ve takvim etkinliklerini tek bir yerde yönet.",
   "lang": "tr",
   "dir": "ltr",
   "start_url": "/planora/",
   "scope": "/planora/",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#F4EFEB",
-  "theme_color": "#4A6B5B",
+  "background_color": "#E2FF00",
+  "theme_color": "#DFFF00",
   "icons": [
     {
-      "src": "./icon-192.png?v=bull2",
-      "sizes": "192x192",
+      "src": "./monenda-icon.png?v=monenda1",
+      "sizes": "128x128",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icon-512.png?v=bull2",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "./icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
       "purpose": "any"
     }
   ]
