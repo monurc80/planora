@@ -1,11 +1,11 @@
-/* Planora PWA v1: kullanıcı verileri ve oturumlar kesinlikle önbelleğe alınmaz. */
-const CACHE='planora-offline-v2';
+/* Monenda PWA v1: kullanıcı verileri ve oturumlar kesinlikle önbelleğe alınmaz. */
+const CACHE='monenda-offline-v1';
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE).then(cache=>cache.add('./offline.html')));
  self.skipWaiting();
 });
 self.addEventListener('activate',event=>{
- event.waitUntil(Promise.all([self.clients.claim(),caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('planora-offline-')&&key!==CACHE).map(key=>caches.delete(key))))]));
+ event.waitUntil(Promise.all([self.clients.claim(),caches.keys().then(keys=>Promise.all(keys.filter(key=>(key.startsWith('planora-offline-')||key.startsWith('monenda-offline-'))&&key!==CACHE).map(key=>caches.delete(key))))]));
 });
 self.addEventListener('fetch',event=>{
  const request=event.request;
@@ -17,11 +17,11 @@ self.addEventListener('fetch',event=>{
 self.addEventListener('push',event=>{
  let payload={};
  try{payload=event.data?.json()||{}}catch{payload={body:event.data?.text()||''}}
- const title=String(payload.title||'Planora hatırlatması').slice(0,120);
+ const title=String(payload.title||'Monenda hatırlatması').slice(0,120);
  const options={
   body:String(payload.body||'Hatırlatma zamanı geldi.').slice(0,200),
-  icon:'./icon-192.png',
-  badge:'./icon-192.png',
+  icon:'./monenda-icon.png',
+  badge:'./monenda-icon.png',
   tag:'planora-due-'+String(payload.id||'reminder'),
   renotify:true,
   data:{url:'/planora/'}
