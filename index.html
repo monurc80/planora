@@ -718,7 +718,7 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 #app #settings .push-settings{margin-top:18px}
 
 
-/* Monenda v20.7 — ana sayfa Kısa görünümü: yalnızca işaretlenen bilgiler */
+/* Monenda v20.8 — ana sayfa Kısa görünümü: yalnızca işaretlenen bilgiler */
 #app #focus.monenda-short .focus-collection .focus-entry{
  display:flex!important;flex-wrap:wrap!important;align-items:center!important;
  gap:6px 12px!important;padding:13px 16px!important;min-height:0!important;
@@ -743,6 +743,51 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 }
 #app #focus.monenda-short .focus-collection .focus-panel-heading .subtitle,
 #app #focus.monenda-short .focus-collection .focus-sort-label{display:none!important}
+
+
+/* Monenda v20.8 — Kısa görünümün tek ve tutarlı kural seti: tüm kartlı sayfalar */
+/* Ana sayfa: görevlerde başlık+tarih+Düzenle+durum; etkinlikte başlık+tarih+durum; notta başlık+tarih */
+#app #focus.monenda-short .focus-collection .focus-panel-heading .subtitle,
+#app #focus.monenda-short .focus-collection .focus-sort-label{display:none!important}
+#app #focus.monenda-short .focus-collection .focus-entry{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:6px 12px!important;padding:12px 16px!important;min-height:0!important}
+#app #focus.monenda-short .focus-collection .focus-entry-heading{display:block!important;flex:1 1 100%!important;margin:0!important}
+#app #focus.monenda-short .focus-collection .focus-entry-heading strong{font-size:15px!important;line-height:1.35!important}
+#app #focus.monenda-short .focus-collection .focus-entry>p{display:none!important}
+#app #focus.monenda-short .focus-collection .focus-entry>.focus-entry-date{display:block!important;flex:1 1 auto!important;margin:3px 0 0!important;font-size:12px!important;line-height:1.4!important}
+#app #focus.monenda-short .focus-collection .focus-entry>.monenda-card-actions{display:flex!important;flex:0 0 auto!important;align-items:center!important;gap:7px!important;margin:3px 0 0!important}
+#app #focus.monenda-short .focus-collection .focus-entry-task .monenda-card-actions button[data-edit]{display:inline-flex!important}
+#app #focus.monenda-short .focus-collection .focus-entry-event .monenda-card-actions .monenda-status-badge{display:inline-flex!important}
+#app #focus.monenda-short .focus-collection .focus-entry-event .monenda-card-actions button{display:none!important}
+#app #focus.monenda-short .focus-collection .focus-entry-note .focus-entry-date{display:block!important}
+/* Görevlerim: başlık, tarih, Düzenle ve tek durum seçimi */
+#app #tasks.monenda-short #task-list .taskrow{display:flex!important;align-items:center!important;gap:10px!important;padding:12px 14px!important;min-height:0!important}
+#app #tasks.monenda-short #task-list .taskrow .mainline{display:block!important;flex:1 1 auto!important;min-width:0}
+#app #tasks.monenda-short #task-list .taskrow .mainline h3{margin:0!important;font-size:14px!important}
+#app #tasks.monenda-short #task-list .taskrow .mainline .meta{display:block!important;margin-top:5px!important;font-size:12px!important}
+#app #tasks.monenda-short #task-list .taskrow .mainline>p,
+#app #tasks.monenda-short #task-list .taskrow .task-complete-control,
+#app #tasks.monenda-short #task-list .taskrow .task-select-control{display:none!important}
+#app #tasks.monenda-short #task-list .taskrow .stack{display:flex!important;align-items:center!important;gap:7px!important}
+#app #tasks.monenda-short #task-list .taskrow .stack button[data-edit]{display:inline-flex!important}
+#app #tasks.monenda-short #task-list .taskrow .stack button[data-trash]{display:none!important}
+#app #tasks.monenda-short #task-list .taskrow .stack .monenda-status-select{display:inline-flex!important}
+/* Etkinliklerim: başlık+tarih+durum; açıklama ve sil/düzenle detayları gizli */
+#app #events.monenda-short #event-list .focus-entry{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:6px 12px!important;padding:12px 15px!important}
+#app #events.monenda-short #event-list .focus-entry>.focus-entry-heading{flex:1 1 100%!important}
+#app #events.monenda-short #event-list .focus-entry>.focus-entry-date{display:block!important;flex:1 1 auto!important;font-size:12px!important}
+#app #events.monenda-short #event-list .focus-entry>p{display:none!important}
+#app #events.monenda-short #event-list .focus-entry>.monenda-card-actions{display:flex!important;flex:0 0 auto!important}
+#app #events.monenda-short #event-list .focus-entry>.monenda-card-actions .monenda-status-badge{display:inline-flex!important}
+#app #events.monenda-short #event-list .focus-entry>.monenda-card-actions button{display:none!important}
+/* Notlarım: yalnız başlık ve eklenme tarihi */
+#app #notes.monenda-short #note-list .note{padding:12px 15px!important;min-height:0!important}
+#app #notes.monenda-short #note-list .note .note-top{display:flex!important;margin:0 0 5px!important}
+#app #notes.monenda-short #note-list .note .note-icon{display:none!important}
+#app #notes.monenda-short #note-list .note h3{display:block!important;margin:0!important;font-size:14px!important}
+#app #notes.monenda-short #note-list .note .note-body,
+#app #notes.monenda-short #note-list .note .note-actions{display:none!important}
+/* Kısa görünümde takvimde de kart metinleri sade kalır. */
+#app #calendar.monenda-short #calendar-body .calitem{font-size:12px!important;line-height:1.25!important}
 
 </style></head><body>
 <div id="boot" class="loading">Monenda hazırlanıyor… İnternet bağlantısı gerekli.</div>
@@ -769,7 +814,7 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 </section>
 <section id="invitations" class="section hidden" aria-hidden="true"><div class="card"><h3>📮 Görev Takibi</h3><p class="subtitle">Gönderilen görevleri alıcı önce inceler. Kabul edilen atamalar üzerinde çalışabilir; bilgi amaçlı paylaşımlar her zaman salt okunurdur.</p><button class="btn" id="refresh-invitations">↻ Davetleri yenile</button><p id="invitation-message" class="subtitle" role="status"></p></div><div class="invite-grid" style="margin-top:17px"><div class="card"><h3>📥 Bana gelenler</h3><div id="invite-inbox"></div></div><div class="card"><h3>📤 Gönderdiklerim</h3><div id="invite-outbox"></div></div></div></section>
 <section id="settings" class="section"><div class="card"><h3>🎨 Benim tarzım</h3><p class="subtitle">Bu sürümde renkler bu tarayıcıya kaydedilir; sonraki aşamada hesabına senkronize edilecek.</p><div class="settings-grid" id="theme-controls"></div><div class="stack" style="margin-top:18px"><button id="reset-theme" class="btn">Varsayılana dön</button></div></div></section>
-<div class="footnotice version-footer">Monenda v20.7</div>
+<div class="footnotice version-footer">Monenda v20.8</div>
 </main></div></div>
 <div id="notifications-backdrop" class="overlay hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="notifications-heading"><div class="modal detail-sheet"><div class="stack" style="justify-content:space-between"><h2 id="notifications-heading">🔔 Bildirimlerim</h2><button id="notifications-close" type="button" class="btn small">✕</button></div><div id="notifications-list"></div><button id="notifications-read" class="btn small" type="button">Hepsini okundu işaretle</button></div></div>
 <div id="metric-backdrop" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="metric-heading"><div class="modal detail-sheet"><div class="stack" style="justify-content:space-between"><h2 id="metric-heading">Kayıtlar</h2><button id="metric-close" class="btn small" type="button">✕</button></div><p id="metric-subtitle" class="subtitle"></p><div id="metric-results" class="metric-results"></div></div></div>
@@ -1561,44 +1606,7 @@ monendaSyncView=function(){monendaPriorSync();document.getElementById('metric-ba
 monendaSyncView();
 
 
-/* Monenda v20.6 — Kısa görev listesi tablo görünümü; detaylı görünüm orijinal kartları korur */
-const monendaRenderTasksOriginal=renderTasks;
-renderTasks=function(){
- monendaRenderTasksOriginal();
- const section=document.getElementById('tasks');
- if(!section||!section.classList.contains('monenda-short'))return;
- const host=document.getElementById('task-list');
- if(!host)return;
- const find=document.getElementById('status-filter')?.value||'active';
- if(find==='trash')return;
- const rows=items.filter(x=>x.kind==='task'&&!x.deleted_at);
- const search=(document.getElementById('search')?.value||'').toLocaleLowerCase('tr');
- const status=document.getElementById('status-filter')?.value||'active';
- const filtered=rows.filter(x=>{
-  const text=(x.title+' '+(x.body||'')).toLocaleLowerCase('tr');
-  if(!text.includes(search))return false;
-  if(status==='all')return true;
-  if(status==='completed')return x.status==='completed';
-  if(status==='today')return x.status!=='completed'&&x.due_at&&localISO(new Date(x.due_at))===today();
-  if(status==='week')return x.status!=='completed'&&x.due_at&&new Date(x.due_at)>=new Date(new Date().setHours(0,0,0,0))&&new Date(x.due_at)<new Date(Date.now()+7*86400000);
-  if(status==='overdue')return x.status!=='completed'&&x.due_at&&new Date(x.due_at)<new Date();
-  if(status==='high')return x.status!=='completed'&&x.priority==='high';
-  return x.status!=='completed';
- });
- const sort=document.getElementById('sort')?.value||'priority';
- filtered.sort((a,b)=>sort==='due_asc'?(a.due_at||'9999').localeCompare(b.due_at||'9999'):sort==='due_desc'?(b.due_at||'0000').localeCompare(a.due_at||'0000'):sort==='created_asc'?a.created_at.localeCompare(b.created_at):sort==='created_desc'?b.created_at.localeCompare(a.created_at):(a.priority==='high'?0:a.priority==='normal'?1:2)-(b.priority==='high'?0:b.priority==='normal'?1:2));
- const fmt=v=>v?dateText(v):'—';
- const state=x=>monendaTaskStatus(x);
- const result=x=>state(x)==='completed'?'Tamamlandı':state(x)==='overdue'?'Gecikti':'Bekliyor';
- const table='<div class="monenda-short-table-wrap"><table class="monenda-short-table"><thead><tr><th>GÖREV</th><th>DURUM</th><th>OLUŞTURULMA</th><th>PLANLANAN BİTİŞ</th><th>GERÇEKLEŞEN BİTİŞ</th><th>SONUÇ</th></tr></thead><tbody>'+
- filtered.map(x=>'<tr data-detail="'+escapeHTML(x.id)+'" tabindex="0" role="button"><td>'+escapeHTML(x.title)+'</td><td><span class="short-status">'+(state(x)==='completed'?'Tamamlandı':state(x)==='overdue'?'Gecikti':'Bekliyor')+'</span></td><td>'+fmt(x.created_at)+'</td><td>'+fmt(x.due_at)+'</td><td>'+fmt(x.completed_at||x.actual_completed_at)+'</td><td class="short-result '+state(x)+'">'+result(x)+'</td></tr>').join('')+
- '</tbody></table></div>';
- host.insertAdjacentHTML('afterbegin',table);
-};
-const monendaRenderBeforeShortToggle=render;
-render=function(){monendaRenderBeforeShortToggle();if(tab==='tasks'&&document.getElementById('tasks').classList.contains('monenda-short'))monendaSyncView()};
-
-
+/* v20.8: Eski kısa-görünüm tablo müdahalesi kaldırıldı; kartların kendisi sadeleştirilir. */
 /* Monenda v20.6 — Bildirim tercihlerini Kişiselleştirme bölümüne taşı */
 (function(){
  const push=document.getElementById('push-settings');
