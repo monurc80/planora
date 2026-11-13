@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#4A6B5B"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Planora"><meta name="mobile-web-app-capable" content="yes"><meta name="application-name" content="Planora"><meta name="color-scheme" content="light"><link rel="manifest" href="./manifest.webmanifest?v=bull2"><link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png?v=bull2"><link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=bull2"><title>Planora</title>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#DFFF00"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Monenda"><meta name="mobile-web-app-capable" content="yes"><meta name="application-name" content="Monenda"><meta name="color-scheme" content="light"><link rel="manifest" href="./manifest.webmanifest?v=monenda1"><link rel="icon" type="image/png" sizes="192x192" href="./monenda-icon.png?v=monenda1"><link rel="apple-touch-icon" sizes="180x180" href="./monenda-icon.png?v=monenda1"><title>Monenda</title>
 <style>
 :root{--primary-bg:#4A6B5B;--sidebar-hover:#3B5547;--page-bg:#F4EFEB;--card-bg:#FAF6F0;--accent-color:#D48C73;--text-main:#2C3E35;--bg:var(--page-bg);--card:var(--card-bg);--nav:var(--primary-bg);--accent:var(--accent-color);--ink:var(--text-main);--note:#fff0d2;--line:#e6e5da;--font:'Trebuchet MS',system-ui,sans-serif;font-family:var(--font);color:var(--ink);background:var(--bg)}*{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}button,input,textarea,select{outline-offset:2px}.hidden{display:none!important}h1,h2,h3,p{margin-top:0}h1{letter-spacing:-1.2px}a{color:var(--accent)}.shell{display:grid;grid-template-columns:235px minmax(0,1fr);min-height:100vh}.sidebar{background:var(--nav);color:white;padding:25px 16px;display:flex;flex-direction:column;gap:8px}.brand{padding:10px 14px 24px;font-size:27px;font-weight:800}.brand small{display:block;font-size:11px;letter-spacing:1.7px;opacity:.72;margin-top:4px;font-weight:400}.nav-btn{background:transparent;color:white;border:0;width:100%;text-align:left;padding:13px 15px;border-radius:17px}.nav-btn.current,.nav-btn:hover{background:#ffffff28}.owner-pill{display:flex;gap:11px;align-items:center;background:#ffffff23;border:1px solid #ffffff30;border-radius:20px;padding:11px 12px;margin:0 2px 15px;min-width:0}.owner-pill strong{display:block;font-size:12px;overflow-wrap:anywhere;line-height:1.35}.owner-pill small{font-size:9px;letter-spacing:1px;opacity:.8}.owner-symbol{font-size:23px}.select-task{width:19px;height:19px;accent-color:var(--accent);margin-top:2px}.invite-action{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.invite-action input{width:18px;height:18px;accent-color:var(--accent)}.bulk-panel{background:#f0f5e9;border:1px solid #d6e5d4;border-radius:20px;padding:17px;margin:12px 0}.invite-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.invite-card{padding:16px;background:var(--card);border-radius:20px;border:1px solid var(--line);margin:10px 0}.invite-card p{white-space:pre-wrap;font-size:13px}.sidetail{margin-top:auto;font-size:12px;opacity:.85;padding:15px}.page{min-width:0}.header{padding:21px 35px;background:var(--card);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}.header h2{margin:0;font-size:21px}.content{padding:28px 35px;max-width:1350px;margin:auto}.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 5px 20px #725c3010}.auth-panel{max-width:490px;margin:6vh auto 20px;padding:32px}.auth-page{min-height:100vh;padding:25px;background:radial-gradient(circle at 10% 0%,#e1eddd,transparent 45%),radial-gradient(circle at 90% 90%,#ffdfce,transparent 43%),#f9f4e8}.subtitle{color:#788678;font-size:14px;line-height:1.55}.field{display:flex;flex-direction:column;gap:6px;margin:12px 0;font-size:13px;font-weight:650}.field input,.field textarea,.field select,.input{width:100%;padding:12px;border:1px solid #d9ded3;border-radius:14px;background:#fff;color:#37493e}.field textarea{min-height:105px;resize:vertical}.btn{border:1px solid #d8ddd3;background:#fff;color:var(--ink);padding:11px 16px;border-radius:14px;font-weight:700}.btn.primary{background:var(--accent);border-color:var(--accent);color:white}.btn.warn{background:#faebdd;border-color:#eed4c3;color:#985044}.btn.small{padding:7px 10px;font-size:12px}.stack{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}.metric{padding:21px}.metric b{font-size:32px;display:block;margin:9px 0}.muted{color:#788678;font-size:13px}.pill{display:inline-block;font-size:11px;background:#eef3ea;padding:6px 9px;border-radius:30px}.priority{background:#d9f3df;color:#26603b}.high{border-left:5px solid #46a263!important}.low{border-left:5px solid #d4b58e!important}.taskrow{border:1px solid var(--line);border-radius:20px;margin-bottom:10px;padding:17px;display:flex;gap:12px;align-items:flex-start;background:var(--card)}.taskrow.done{opacity:.65}.taskrow .mainline{flex:1;min-width:0}.taskrow h3{font-size:15px;margin:0 0 5px}.taskrow p{white-space:pre-wrap;font-size:13px;margin:6px 0}.taskrow input[type=checkbox]{width:19px;height:19px;accent-color:var(--accent)}.taskrow .meta{font-size:11px;color:#839183;line-height:1.8}.toolbar{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:20px 0}.toolbar select,.toolbar input{padding:10px;border:1px solid var(--line);background:#fff;border-radius:12px;max-width:100%}.split{display:grid;grid-template-columns:1.45fr 1fr;gap:18px}.section{display:none}.section.current{display:block}.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.day{border:1px solid var(--line);border-radius:12px;background:var(--card);min-height:88px;padding:7px;font-size:12px;overflow:hidden}.day.today{border:2px solid var(--accent)}.day.off{opacity:.4}.calitem{display:block;border-radius:6px;background:#e0f1dc;color:#345b3a;padding:4px;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.chart{display:flex;height:15px;border-radius:20px;overflow:hidden;background:#ecece5}.chart span{display:block;background:#64a87e}.empty{padding:35px 10px;text-align:center;color:#899687}.footnotice{border:1px solid #eadcc4;padding:14px;border-radius:16px;background:#fff7e8;color:#745839;font-size:12px;line-height:1.6;margin-top:20px}.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.setting-tile{display:flex;gap:10px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:16px}.setting-tile input{width:40px;height:34px;border:0;padding:0}.overlay{position:fixed;inset:0;background:#21392c7e;z-index:10;display:flex;align-items:center;justify-content:center;padding:15px}.modal{width:min(590px,100%);max-height:90vh;overflow:auto;background:var(--card);border-radius:24px;padding:25px}.center{text-align:center}.toast{position:fixed;bottom:18px;right:18px;background:#325c47;color:#fff;border-radius:15px;padding:13px 18px;box-shadow:0 8px 30px #0002;z-index:30}.tabs{display:flex;gap:5px;margin-bottom:18px}.tabs button.active{background:var(--accent);color:white}.note{background:var(--note);border-radius:23px;padding:20px;margin:0 0 12px;white-space:pre-wrap;overflow-wrap:anywhere}.badge{font-size:11px;background:#f7ead3;border-radius:14px;padding:4px 9px}.loading{text-align:center;padding:45px}.noinput{color:#ae5e45;font-size:12px}.inline-label{font-size:13px;font-weight:700}.filterrow{display:flex;gap:12px;flex-wrap:wrap}@media(max-width:850px){.shell{display:block}.sidebar{position:relative;display:flex;flex-direction:row;flex-wrap:wrap;gap:3px;padding:10px}.brand{width:100%;font-size:21px;padding:7px}.brand small,.sidetail{display:none}.nav-btn{width:auto;padding:9px 11px;font-size:12px}.header{padding:16px}.content{padding:15px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.split,.settings-grid{grid-template-columns:1fr}.day{min-height:66px;padding:4px;font-size:10px}.calitem{font-size:9px}.taskrow{flex-wrap:wrap}.taskrow .stack{width:100%}}
 .v9-table{width:100%;border-collapse:collapse;min-width:630px;font-size:13px}.v9-table th,.v9-table td{text-align:left;padding:10px 9px;border-bottom:1px solid var(--line)}.v9-table th{color:var(--ink);opacity:.75}.tablewrap{overflow-x:auto;border-radius:18px;border:1px solid var(--line);margin:12px 0}.v9-activity{margin-top:10px;border-left:4px solid #b1cfb7}.v9-activity .meta{overflow-wrap:anywhere}@media(max-width:650px){.v9-table{font-size:12px}}
@@ -42,7 +42,7 @@
 @media(max-width:850px){.shell{display:block}.sidebar{padding:14px 15px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.sidebar .brand,.sidebar .owner-pill{grid-column:1/-1}.sidebar .nav-btn{padding:11px;font-size:13px}.planora-subpage .sidebar{display:none}.header{padding:14px 16px}.header h2{font-size:19px}.content{padding:18px 15px}.header .stack{gap:6px}.header .btn{font-size:12px;padding:10px 12px}}
 @media(max-width:480px){.sidebar{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.split,.invite-grid{grid-template-columns:1fr}.detail-meta{grid-template-columns:1fr}.header h2{font-size:17px}.card{padding:16px}}
 
-/* Planora v15 — sıcak defter / erişilebilir kayıt kartları */
+/* Monenda v15 — sıcak defter / erişilebilir kayıt kartları */
 #entry-uploads{background:#fffdfa;border-radius:13px;border:1px dashed #b4baa8;padding:14px}
 .attachment-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:#fffdfa;border-radius:12px;padding:10px;margin:8px 0}
 .calitem[hidden]{display:none!important}
@@ -134,7 +134,7 @@
 @media(min-width:1200px){#report-metrics{grid-template-columns:repeat(6,minmax(0,1fr))}}
 @media(max-width:850px){.sidebar .brand{font-size:23px}.sidebar .owner-symbol{height:43px;width:43px}.header h2{font-size:21px}#report-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}#metrics .metric,#report-metrics .metric{min-height:144px}#metrics .metric b,#report-metrics .metric b{font-size:30px}}
 @media(prefers-reduced-motion:reduce){.sidebar .nav-btn{transition:none}}
-/* Planora v15.6: mobilde tarayıcı dikte butonunu gizle; iOS klavye mikrofonu kullanılacak. Masaüstü değişmez. */
+/* Monenda v15.6: mobilde tarayıcı dikte butonunu gizle; iOS klavye mikrofonu kullanılacak. Masaüstü değişmez. */
 @media (max-width:850px){.speech-dictation{display:none!important}}
 
 /* v15.8 — yalın görev seçimi ve sıcak, defter benzeri sayfa */
@@ -172,7 +172,7 @@
 @media(max-width:850px){.task-select-toolbar{align-items:flex-start}.task-select-toolbar h3{font-size:22px}#task-list .taskrow{padding:15px 12px;gap:10px}#task-list .taskrow h3{font-size:17px}#task-list .taskrow .stack{gap:5px}#task-list .taskrow .btn{font-size:11px;padding:7px 8px}.task-complete-control{font-size:11px;padding:8px 9px}#task-list .taskrow .mainline{flex-basis:55%}}
 @media(max-width:500px){.task-select-toolbar{gap:8px}.task-selection-toggle{font-size:12px;padding:9px 10px}#task-list .taskrow .mainline{flex-basis:60%}#task-list .taskrow .stack{width:100%;justify-content:flex-end}.task-complete-control span{font-size:11px}}
 
-/* Planora v15.9 – kullanıcının özgün adaçayı / krem / terakota tasarım rehberi */
+/* Monenda v15.9 – kullanıcının özgün adaçayı / krem / terakota tasarım rehberi */
 :root{
  --primary-bg:var(--nav);--sidebar-hover:#3B5547;
  --page-bg:var(--bg);--card-bg:var(--card);
@@ -206,13 +206,13 @@ body{color:var(--text-main);background:var(--page-bg)}
 .task-bulk-tools{background:color-mix(in srgb,var(--page-bg),#d7e7d0 35%)!important}
 @media(max-width:850px){#metrics .metric b,#report-metrics .metric b{font-size:29px}.content{padding-top:18px}}
 
-/* Planora kişisel kullanım — paylaşımla ilişkili kontroller görünmez */
+/* Monenda kişisel kullanım — paylaşımla ilişkili kontroller görünmez */
 #sharing,#invitations,#detail-comments,#invite-modal,#notifications-backdrop,#notify-open,
 #task-bulk-tools,#toggle-task-selection,#close-task-selection,#share-selected-entries,
 #clear-entry-selection,[data-note-share],[data-note-assign],[data-detail-share],
 [data-detail-assign],[data-entry-toggle],[data-entry-revoke] {display:none!important}
 
-/* === PLANORA 16.1: Bütünleşik adaçayı ve el yapımı ajanda tasarımı === */
+/* === MONENDA 16.1: Bütünleşik adaçayı ve el yapımı ajanda tasarımı === */
 :root{--primary-bg:var(--nav);--page-bg:var(--bg);--card-bg:var(--card);--accent-color:var(--accent);--text-main:var(--ink);--sidebar-hover:#3B5547;--paper-border:#e5dac7;--paper-shadow:0 13px 33px #453d2811,0 3px 8px #453d2810}
 html{scroll-behavior:smooth}body{background:var(--page-bg);color:var(--text-main)}
 .shell{display:grid;grid-template-columns:264px minmax(0,1fr);min-height:100dvh}
@@ -290,10 +290,10 @@ html{scroll-behavior:smooth}body{background:var(--page-bg);color:var(--text-main
 @media(max-width:850px){.shell{display:block}.sidebar{position:relative;height:auto;border-radius:0 0 24px 24px;padding:14px 14px 16px;display:block}.sidebar-top{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px}.sidebar .owner-pill{order:2;max-width:59%;padding:8px}.sidebar .owner-symbol{width:36px;height:36px;flex-basis:36px}.sidebar .owner-symbol svg{width:20px;height:20px}.sidebar .owner-pill strong{font-size:10px}.sidebar .brand{order:1;padding:0;font-size:24px;white-space:nowrap}.sidebar .brand small{font-size:7px;letter-spacing:1px}.sidebar-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.sidebar .nav-btn{flex-direction:column;justify-content:center;gap:5px;min-height:65px;padding:7px 3px;font-size:10px;text-align:center}.sidebar .nav-btn.current{border-left:1px solid #ffffff38;border-bottom:3px solid var(--accent-color);padding:7px 3px 5px}.sidebar .nav-symbol{width:18px;height:18px}.sidebar-flourish{display:none}.planora-subpage .sidebar{display:none}.header{padding:15px 17px;min-height:70px}.header h2{font-size:20px}.content{padding:19px 15px}#reports .report-paper{padding:22px 15px}.report-heading h3{font-size:31px}.report-ornament{display:none}#report-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}#report-metrics .metric{min-height:135px;padding:13px 7px}#report-metrics .metric b{font-size:32px}#reports .report-exports{justify-content:flex-start}}
 @media(max-width:460px){.sidebar-nav{grid-template-columns:repeat(4,minmax(0,1fr))}.sidebar .nav-btn{font-size:9px}.sidebar .brand{font-size:22px}.sidebar .owner-pill small{font-size:8px}#reports .filterrow .field{width:100%}#report-metrics .metric .muted{font-size:13px}}
 @media(prefers-reduced-motion:reduce){.sidebar .nav-btn{transition:none}}
-/* Planora v16.2: metric cards are personal-only. */
+/* Monenda v16.2: metric cards are personal-only. */
 [data-metric-assign],[data-metric-share]{display:none!important}
 
-/* PLANORA 17 — BÜTÜN EKRANLAR: referans görsel tabanlı sıcak defter tasarımı
+/* MONENDA 17 — BÜTÜN EKRANLAR: referans görsel tabanlı sıcak defter tasarımı
    Değiştirilebilir ana renkler: --primary-bg --sidebar-hover --page-bg --card-bg --accent-color --text-main */
 :root{
  --sidebar-hover:#3B5547;
@@ -479,7 +479,7 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 }
 @media print{#app.shell{display:block!important;padding:0!important}#app .sidebar,#app .header{display:none!important}#app .page,#app .content{border-radius:0!important;background:#fff!important;box-shadow:none!important;padding:0!important}#app #reports .ref-metric{min-height:130px!important}#app #reports .tablewrap{box-shadow:none!important}}
 
-/* Planora v17.3: referans menü - ad sağında konuma uygun krem çizgi ikonları.
+/* Monenda v17.3: referans menü - ad sağında konuma uygun krem çizgi ikonları.
    En alttaki dekoratif kalp/slogan kaldırıldı. */
 #app .sidebar-flourish{display:none!important}
 #app .sidebar-nav{gap:5px}
@@ -504,7 +504,7 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
  #app .sidebar .nav-btn>span{flex:none}
 }
 
-/* Planora v17.6 — hesap bazlı kişisel avatar ve takma ad */
+/* Monenda v17.6 — hesap bazlı kişisel avatar ve takma ad */
 #app .sidebar .owner-pill{display:flex!important;flex-direction:row!important;align-items:center;gap:11px;text-align:left;padding:12px 10px}
 #app .sidebar .profile-photo-button{position:relative;display:block;flex:0 0 58px;height:58px;padding:0;background:none;border:0;border-radius:50%;cursor:pointer}
 #app .sidebar .profile-photo-button .owner-symbol{width:58px!important;height:58px!important;display:flex!important;align-items:center;justify-content:center;overflow:hidden;border-radius:50%}
@@ -528,7 +528,7 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 }
 #app .version-footer{margin:22px 0 4px;padding:0;text-align:center;border:0;background:transparent;box-shadow:none;color:#879084;font-size:11px}
 
-/* Planora v17.7 — ana ekranda 5'li görev, hatırlatma ve not panelleri */
+/* Monenda v17.7 — ana ekranda 5'li görev, hatırlatma ve not panelleri */
 #app .focus-collections{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;margin-top:24px}
 #app .focus-collection{min-width:0;display:flex;flex-direction:column;min-height:415px;padding:19px;border-radius:29px;background:#fff9f0;box-shadow:0 8px 19px #55452f1a}
 #app .focus-panel-heading{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:9px;margin-bottom:15px}
@@ -552,12 +552,12 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 @media(max-width:1320px){#app .focus-collections{grid-template-columns:repeat(2,minmax(0,1fr))}#app .focus-notes{grid-column:1/-1}}
 @media(max-width:850px){#app .focus-collections{grid-template-columns:1fr}#app .focus-notes{grid-column:auto}#app .focus-collection{min-height:0;padding:18px}#app .focus-panel-heading h3{font-size:21px}}
 
-/* Planora boğalı yeni marka görseli */
+/* Monenda boğalı yeni marka görseli */
 #app .sidebar .brand.planora-logo-brand{display:flex;justify-content:center;align-items:center;padding:0 5px 10px;line-height:1}
 #app .sidebar .planora-sidebar-logo{display:block;width:142px;max-width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;border-radius:27px;box-shadow:0 7px 20px #132c2540}
 @media(max-width:850px){#app .sidebar .brand.planora-logo-brand{padding:0;justify-content:flex-start}#app .sidebar .planora-sidebar-logo{width:67px;border-radius:16px}}
 
-/* Planora v18.1: Bildirim izin ekranı */
+/* Monenda v18.1: Bildirim izin ekranı */
 #app .push-settings{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:13px;padding:20px 23px;margin:18px 0 20px;border-radius:25px;background:#e7efe1;border:1px solid #ccd9c6}
 #app .push-settings-copy{flex:1;min-width:210px}
 #app .push-settings-copy strong{font:600 19px Georgia,serif;color:#3d624d}
@@ -600,10 +600,10 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
  #app .sidebar .profile-camera{width:24px;height:24px;font-size:12px}
 }
 </style></head><body>
-<div id="boot" class="loading">Planora hazırlanıyor… İnternet bağlantısı gerekli.</div>
-<div id="auth" class="auth-page hidden"><div class="card auth-panel"><h1>🌿 Planora</h1><p class="subtitle">Küçük notlar, büyük kolaylıklar. Kişisel ajandana hoş geldin.</p><div class="tabs"><button class="btn active" data-auth-tab="login">Giriş Yap</button><button class="btn" data-auth-tab="signup">Kayıt Ol</button></div><form id="authform"><label id="namelabel" class="field hidden">Adın<input id="display-name" maxlength="80" autocomplete="name"></label><label class="field">E-posta<input id="email" type="email" required autocomplete="email"></label><label class="field">Şifre<input id="password" type="password" required minlength="8" autocomplete="current-password"></label><button class="btn primary" id="auth-submit" type="submit">Giriş Yap</button></form><p id="auth-message" class="subtitle" role="status"></p><button id="forgot" class="btn small">Şifremi unuttum</button><div id="recovery" class="hidden"><label class="field">Yeni şifre<input id="new-password" type="password" minlength="8"></label><button id="save-new-password" class="btn primary">Yeni şifreyi kaydet</button><p id="recovery-message" class="subtitle"></p></div><p class="footnotice">Yeni kullanıcı kaydında önce e-posta doğrulaması, ardından yöneticinin sana ileteceği 4 haneli kod gerekir. Kayıt olmak, başkasının ajandasına erişim sağlamaz.</p></div></div>
+<div id="boot" class="loading">Monenda hazırlanıyor… İnternet bağlantısı gerekli.</div>
+<div id="auth" class="auth-page hidden"><div class="card auth-panel"><h1>🌿 Monenda</h1><p class="subtitle">Küçük notlar, büyük kolaylıklar. Kişisel ajandana hoş geldin.</p><div class="tabs"><button class="btn active" data-auth-tab="login">Giriş Yap</button><button class="btn" data-auth-tab="signup">Kayıt Ol</button></div><form id="authform"><label id="namelabel" class="field hidden">Adın<input id="display-name" maxlength="80" autocomplete="name"></label><label class="field">E-posta<input id="email" type="email" required autocomplete="email"></label><label class="field">Şifre<input id="password" type="password" required minlength="8" autocomplete="current-password"></label><button class="btn primary" id="auth-submit" type="submit">Giriş Yap</button></form><p id="auth-message" class="subtitle" role="status"></p><button id="forgot" class="btn small">Şifremi unuttum</button><div id="recovery" class="hidden"><label class="field">Yeni şifre<input id="new-password" type="password" minlength="8"></label><button id="save-new-password" class="btn primary">Yeni şifreyi kaydet</button><p id="recovery-message" class="subtitle"></p></div><p class="footnotice">Yeni kullanıcı kaydında önce e-posta doğrulaması, ardından yöneticinin sana ileteceği 4 haneli kod gerekir. Kayıt olmak, başkasının ajandasına erişim sağlamaz.</p></div></div>
 <div id="activation" class="auth-page hidden"><div class="card auth-panel"><h1>✉️ Hoş geldin!</h1><p class="subtitle">E-postanı doğruladın. Şimdi yöneticiye özel kod başvurusu gönder; sana iletilen 4 haneli kodu aşağıya gir.</p><button id="request-code" class="btn primary">Aktivasyon kodu iste</button><label class="field">4 haneli kod<input id="activation-code" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="0000"></label><div class="stack"><button id="verify-code" class="btn primary">Kodu doğrula</button><button id="activation-logout" class="btn">Çıkış</button></div><p class="subtitle" id="activation-message" role="status"></p><p class="footnotice">Kod 15 dakika geçerlidir. Kullanım izni sadece kendi özel ajandan içindir. Yöneticiye ait ajandalara otomatik erişim verilmez.</p></div></div>
-<div id="app" class="shell hidden"><aside class="sidebar"><div class="sidebar-top"><div class="owner-pill"><button type="button" id="profile-photo-open" class="profile-photo-button" title="Profil fotoğrafını değiştir" aria-label="Profil fotoğrafını değiştir"><span class="owner-symbol"><svg id="profile-placeholder" viewBox="0 0 24 24" class="nav-symbol" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 3-8 8-8s8 3 8 8"/></svg><img id="profile-avatar" alt="" class="hidden"></span><span class="profile-camera" aria-hidden="true">✎</span></button><button type="button" class="profile-name-button" id="profile-name-open" title="Görünen adı değiştir"><strong id="identity"></strong><span aria-hidden="true" class="profile-edit-glyph">✎</span></button></div><div class="brand planora-logo-brand"><img src="./apple-touch-icon.png?v=bull2" alt="Planora · by monurc" class="planora-sidebar-logo"></div></div><nav class="sidebar-nav" aria-label="Ajanda menüsü"><button class="nav-btn current" data-tab="focus"><span>Günün Odağı</span><svg viewBox="0 0 24 24" class="nav-symbol" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l2 2m10 10 2 2M19 5l-2 2M7 17l-2 2"/></svg></button><button class="nav-btn" data-tab="tasks"><span>Görevlerim</span><svg viewBox="0 0 24 24" class="nav-symbol" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="4"/><path d="m8 12 3 3 5-6"/></svg></button><button class="nav-btn" data-tab="notes"><span>Notlarım</span><svg viewBox="0 0 24 24" class="nav-symbol" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M14 3v5h5M8 12h7M8 16h6"/></svg></button><button class="nav-btn" data-tab="calendar"><span>Takvimim</span><svg viewBox="0 0 24 24" class="nav-symbol" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 3v4M17 3v4M3 10h18"/></svg></button><button class="nav-btn" data-tab="reports"><span>Bir Bakışta</span><svg viewBox="0 0 24 24" class="nav-symbol" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M7 16v-4m5 4V8m5 8v-6"/></svg></button><button class="nav-btn" data-tab="history"><span>İşlem Geçmişi</span><svg viewBox="0 0 24 24" class="nav-symbol" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9H2V4m0 5a10 10 0 1 1 .7 7M12 6v6l4 2"/></svg></button><button class="nav-btn" data-tab="settings"><span>Kişiselleştirme</span><svg viewBox="0 0 24 24" class="nav-symbol" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1.2a2.2 2.2 0 0 0 1.6-3.7 1.5 1.5 0 0 1 1.1-2.5h1.7A4.4 4.4 0 0 0 22 10a9 9 0 0 0-10-7Z"/><circle cx="7" cy="10" r="1"/><circle cx="11" cy="7" r="1"/><circle cx="17" cy="9" r="1"/></svg></button></nav></aside><div class="page"><header class="header"><h2 id="page-title">Günün Odağı</h2><div class="stack"><button id="home-nav" class="btn small hidden" type="button">← Ana sayfa</button><button id="add-task" class="btn primary">＋ Yeni Kayıt</button><button id="notify-open" class="btn small notify-open hidden" aria-hidden="true" tabindex="-1" type="button">🔔 Bildirimler <span id="notify-count" class="notif-count" hidden>0</span></button><button id="logout" class="btn small">Çıkış</button></div></header><main class="content">
+<div id="app" class="shell hidden"><aside class="sidebar"><div class="sidebar-top"><div class="owner-pill"><button type="button" id="profile-photo-open" class="profile-photo-button" title="Profil fotoğrafını değiştir" aria-label="Profil fotoğrafını değiştir"><span class="owner-symbol"><svg id="profile-placeholder" viewBox="0 0 24 24" class="nav-symbol" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 3-8 8-8s8 3 8 8"/></svg><img id="profile-avatar" alt="" class="hidden"></span><span class="profile-camera" aria-hidden="true">✎</span></button><button type="button" class="profile-name-button" id="profile-name-open" title="Görünen adı değiştir"><strong id="identity"></strong><span aria-hidden="true" class="profile-edit-glyph">✎</span></button></div><div class="brand planora-logo-brand"><img src="./monenda-icon.png?v=monenda1" alt="Monenda · by monurc" class="planora-sidebar-logo"></div></div><nav class="sidebar-nav" aria-label="Ajanda menüsü"><button class="nav-btn current" data-tab="focus"><span>Günün Odağı</span><svg viewBox="0 0 24 24" class="nav-symbol" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l2 2m10 10 2 2M19 5l-2 2M7 17l-2 2"/></svg></button><button class="nav-btn" data-tab="tasks"><span>Görevlerim</span><svg viewBox="0 0 24 24" class="nav-symbol" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="4"/><path d="m8 12 3 3 5-6"/></svg></button><button class="nav-btn" data-tab="notes"><span>Notlarım</span><svg viewBox="0 0 24 24" class="nav-symbol" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M14 3v5h5M8 12h7M8 16h6"/></svg></button><button class="nav-btn" data-tab="calendar"><span>Takvimim</span><svg viewBox="0 0 24 24" class="nav-symbol" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 3v4M17 3v4M3 10h18"/></svg></button><button class="nav-btn" data-tab="reports"><span>Bir Bakışta</span><svg viewBox="0 0 24 24" class="nav-symbol" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M7 16v-4m5 4V8m5 8v-6"/></svg></button><button class="nav-btn" data-tab="history"><span>İşlem Geçmişi</span><svg viewBox="0 0 24 24" class="nav-symbol" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9H2V4m0 5a10 10 0 1 1 .7 7M12 6v6l4 2"/></svg></button><button class="nav-btn" data-tab="settings"><span>Kişiselleştirme</span><svg viewBox="0 0 24 24" class="nav-symbol" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1.2a2.2 2.2 0 0 0 1.6-3.7 1.5 1.5 0 0 1 1.1-2.5h1.7A4.4 4.4 0 0 0 22 10a9 9 0 0 0-10-7Z"/><circle cx="7" cy="10" r="1"/><circle cx="11" cy="7" r="1"/><circle cx="17" cy="9" r="1"/></svg></button></nav></aside><div class="page"><header class="header"><h2 id="page-title">Günün Odağı</h2><div class="stack"><button id="home-nav" class="btn small hidden" type="button">← Ana sayfa</button><button id="add-task" class="btn primary">＋ Yeni Kayıt</button><button id="notify-open" class="btn small notify-open hidden" aria-hidden="true" tabindex="-1" type="button">🔔 Bildirimler <span id="notify-count" class="notif-count" hidden>0</span></button><button id="logout" class="btn small">Çıkış</button></div></header><main class="content">
 <section id="focus" class="section current"><div class="planora-welcome"><h2>Her Gün Biraz Daha Kolay</h2><p>Bugünün işleri, notların ve ajandan bir arada.</p></div><div class="grid" id="metrics"></div><div class="focus-collections"><section class="card focus-collection focus-tasks"><div class="focus-panel-heading"><div><h3>🌼 Yaklaşan görevler</h3><p class="subtitle">Tamamlanmayı bekleyen ilk 5 görev</p></div><label class="focus-sort-label"><span>Sırala</span><select id="focus-sort-tasks" aria-label="Yaklaşan görevler sıralaması"><option value="due_asc">En yakın tarih önce</option><option value="due_desc">En uzak tarih önce</option><option value="created_desc">Son eklenen önce</option><option value="created_asc">İlk eklenen önce</option></select></label></div><div id="focus-tasks" class="focus-card-list"></div><button type="button" class="focus-see-all btn small" data-tab-jump="tasks">Tümünü gör</button></section><section class="card focus-collection focus-reminders"><div class="focus-panel-heading"><div><h3>📆 Etkinliklerim</h3><p class="subtitle">Son eklenen 5 takvim etkinliği</p></div><label class="focus-sort-label"><span>Sırala</span><select id="focus-sort-reminders" aria-label="Etkinlikler sıralaması"><option value="due_asc">En yakın tarih önce</option><option value="due_desc">En uzak tarih önce</option><option value="created_desc" selected>Son eklenen önce</option><option value="created_asc">İlk eklenen önce</option></select></label></div><div id="focus-reminders" class="focus-card-list"></div><button type="button" class="focus-see-all btn small" data-tab-jump="calendar">Tümünü gör</button></section><section class="card focus-collection focus-notes"><div class="focus-panel-heading"><div><h3>📌 Küçük notlar</h3><p class="subtitle">Son eklenen 5 not</p></div><label class="focus-sort-label"><span>Sırala</span><select id="focus-sort-notes" aria-label="Küçük notlar sıralaması"><option value="created_desc">Son eklenen önce</option><option value="created_asc">İlk eklenen önce</option></select></label></div><div id="focus-notes" class="focus-card-list"></div><button type="button" class="focus-see-all btn small" data-tab-jump="notes">Tümünü gör</button></section></div><div id="focus-list" class="hidden" aria-hidden="true"></div></section>
 <section id="tasks" class="section"><div class="toolbar"><div class="stack"><input id="search" class="input" placeholder="Görev ara…" aria-label="Görev ara"><select id="status-filter"><option value="active">Bekleyen</option><option value="all">Tümü</option><option value="completed">Tamamlanan</option><option value="today">Bugün yapılacaklar</option><option value="week">Önümüzdeki 7 gün</option><option value="overdue">Gecikenler</option><option value="high">🟢 Öncelikli işler</option><option value="trash">Çöp kutusu</option></select></div><div class="stack"><select id="sort"><option value="priority">Öncelik sırası</option><option value="due_asc">Bitiş: en yakın</option><option value="due_desc">Bitiş: en uzak</option><option value="created_desc">Eklenme: en yeni</option><option value="created_asc">Eklenme: en eski</option></select></div></div><div class="push-settings card" id="push-settings"><div class="push-settings-copy"><strong>🔔 Telefon bildirimleri</strong><p class="subtitle">Görev ve takvim etkinliklerinde belirlediğin zamanda iPhone’una bildirim gönder.</p><p id="push-status" class="subtitle" role="status">Bildirim durumu kontrol ediliyor…</p></div><div class="push-settings-actions"><button id="push-enable" type="button" class="btn primary">Bildirimleri aç</button><button id="push-test" type="button" class="btn small hidden">Test bildirimi gönder</button><button id="push-disable" type="button" class="btn small hidden">Bu cihazda kapat</button></div></div><div class="task-select-toolbar"><div><h3>Yapılacaklarım</h3><p class="subtitle">Görevi açarak ayrıntıları görebilirsin.</p></div></div><div class="hidden" aria-hidden="true"><div class="task-select-toolbar"><div><h3>Yapılacaklarım</h3><p class="subtitle">Görevi açarak ayrıntıları görebilirsin.</p></div><button id="toggle-task-selection" type="button" class="btn task-selection-toggle" aria-pressed="false">☑️ Çoklu seçim</button></div><div class="bulk-panel task-bulk-tools" id="task-bulk-tools" hidden><div class="stack" style="justify-content:space-between"><label class="invite-action"><input type="checkbox" id="select-all-tasks"> Listelenenlerin tümünü seç</label><strong id="selected-count">0 görev seçildi</strong></div><div class="stack" style="margin-top:12px"><button id="send-selected" class="btn primary" type="button">🤝 Seçili görevleri gönder</button><button id="clear-selected" class="btn" type="button">Seçimi temizle</button><button id="close-task-selection" class="btn small" type="button">Bitti</button></div></div></div><div id="task-list"></div></section>
 <section id="notes" class="section"><div class="toolbar"><h3>📝 Notlarım</h3><div class="stack"><span class="subtitle">Notlarını tarihe göre sırala</span><select id="notes-sort" aria-label="Notları sırala"><option value="created_desc">Son eklenen önce</option><option value="created_asc">İlk eklenen önce</option></select></div></div><div id="note-list" class="note-grid"></div></section><section id="calendar" class="section"><div class="toolbar"><div class="stack"><button class="btn small" id="prev-month">←</button><b id="month-label"></b><button class="btn small" id="next-month">→</button></div><select id="calendar-view"><option value="month">Aylık</option><option value="week">Haftalık</option><option value="day">Günlük</option><option value="year">Yıllık</option></select></div><div class="cal-toggle" id="calendar-toggles" aria-label="Takvim tür filtreleri"><button type="button" class="cal-switch" data-cal-kind="task" aria-pressed="true">✅ Görev</button><button type="button" class="cal-switch" data-cal-kind="event" aria-pressed="true">📆 Etkinlik</button><button type="button" class="cal-switch" data-cal-kind="note" aria-pressed="true">📝 Not (tarihli)</button></div><div class="card planora-events-panel"><div class="stack" style="justify-content:space-between;align-items:center"><div><h3>📆 Takvim etkinliklerim</h3><p class="subtitle">Randevular ve önemli günler · tamamlandı takibi yok.</p></div><button id="add-calendar-event" type="button" class="btn primary">＋ Etkinlik ekle</button></div><div id="calendar-events-list" class="focus-card-list"></div></div><div id="calendar-body"></div></section>
@@ -624,7 +624,7 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 </section>
 <section id="invitations" class="section hidden" aria-hidden="true"><div class="card"><h3>📮 Görev Takibi</h3><p class="subtitle">Gönderilen görevleri alıcı önce inceler. Kabul edilen atamalar üzerinde çalışabilir; bilgi amaçlı paylaşımlar her zaman salt okunurdur.</p><button class="btn" id="refresh-invitations">↻ Davetleri yenile</button><p id="invitation-message" class="subtitle" role="status"></p></div><div class="invite-grid" style="margin-top:17px"><div class="card"><h3>📥 Bana gelenler</h3><div id="invite-inbox"></div></div><div class="card"><h3>📤 Gönderdiklerim</h3><div id="invite-outbox"></div></div></div></section>
 <section id="settings" class="section"><div class="card"><h3>🎨 Benim tarzım</h3><p class="subtitle">Bu sürümde renkler bu tarayıcıya kaydedilir; sonraki aşamada hesabına senkronize edilecek.</p><div class="settings-grid" id="theme-controls"></div><div class="stack" style="margin-top:18px"><button id="reset-theme" class="btn">Varsayılana dön</button></div></div></section>
-<div class="footnotice version-footer">Planora v19.0</div>
+<div class="footnotice version-footer">Monenda v20.0</div>
 </main></div></div>
 <div id="notifications-backdrop" class="overlay hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="notifications-heading"><div class="modal detail-sheet"><div class="stack" style="justify-content:space-between"><h2 id="notifications-heading">🔔 Bildirimlerim</h2><button id="notifications-close" type="button" class="btn small">✕</button></div><div id="notifications-list"></div><button id="notifications-read" class="btn small" type="button">Hepsini okundu işaretle</button></div></div>
 <div id="metric-backdrop" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="metric-heading"><div class="modal detail-sheet"><div class="stack" style="justify-content:space-between"><h2 id="metric-heading">Kayıtlar</h2><button id="metric-close" class="btn small" type="button">✕</button></div><p id="metric-subtitle" class="subtitle"></p><div id="metric-results" class="metric-results"></div></div></div>
@@ -707,7 +707,7 @@ $('profile-editor-form').addEventListener('submit',async e=>{
  finally{save.disabled=false}
 });
 
-const PLANORA_VAPID_PUBLIC='BBw3FsOxTKyVo43GGgFEfbXVky-GVGZpsrxeKrwT9yD00DTm2i5tG3jmanbEwXcEYYieVdiq2aQjaehF66OjTO8';
+const MONENDA_VAPID_PUBLIC='BBw3FsOxTKyVo43GGgFEfbXVky-GVGZpsrxeKrwT9yD00DTm2i5tG3jmanbEwXcEYYieVdiq2aQjaehF66OjTO8';
 function planoraVapidBytes(base64url){
  const base64=base64url.replace(/-/g,'+').replace(/_/g,'/');
  const raw=atob(base64.padEnd(Math.ceil(base64.length/4)*4,'='));
@@ -719,18 +719,18 @@ function pushSupported(){
 function iphoneStandaloneRequired(){
  return /iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.matchMedia('(display-mode: standalone)').matches&&!navigator.standalone;
 }
-async function updatePlanoraPushUI(){
+async function updateMonendaPushUI(){
  const status=$('push-status'),enable=$('push-enable'),disable=$('push-disable'),test=$('push-test');
  if(!status)return;
  if(!pushSupported()){
-  status.textContent='Bildirimler için iPhone ana ekranındaki Planora simgesini kullan. Tarayıcı desteklemiyorsa izin verilemez.';enable.classList.remove('hidden');disable.classList.add('hidden');test.classList.add('hidden');return;
+  status.textContent='Bildirimler için iPhone ana ekranındaki Monenda simgesini kullan. Tarayıcı desteklemiyorsa izin verilemez.';enable.classList.remove('hidden');disable.classList.add('hidden');test.classList.add('hidden');return;
  }
  if(iphoneStandaloneRequired()){
-  status.textContent='iPhone’da bildirim almak için Planora’yı Safari > Paylaş > Ana Ekrana Ekle ile aç.';
+  status.textContent='iPhone’da bildirim almak için Monenda’yı Safari > Paylaş > Ana Ekrana Ekle ile aç.';
   enable.classList.remove('hidden');disable.classList.add('hidden');test.classList.add('hidden');return;
  }
  if(Notification.permission==='denied'){
-  status.textContent='Bildirim izni kapalı. iPhone Ayarlar > Bildirimler > Planora bölümünden izin ver.';
+  status.textContent='Bildirim izni kapalı. iPhone Ayarlar > Bildirimler > Monenda bölümünden izin ver.';
   enable.classList.remove('hidden');disable.classList.add('hidden');test.classList.add('hidden');return;
  }
  try{
@@ -740,32 +740,32 @@ async function updatePlanoraPushUI(){
    const {data:matching,error}=await sb.from('planora_push_subscriptions').select('id').eq('user_id',user.id).eq('endpoint',subscription.endpoint).maybeSingle();
    if(error)throw error;
    if(matching){
-    status.textContent='Bildirimler açık. Planora hatırlatmaları bu cihaza gönderilebilir.';
+    status.textContent='Bildirimler açık. Monenda hatırlatmaları bu cihaza gönderilebilir.';
     enable.classList.add('hidden');disable.classList.remove('hidden');test.classList.remove('hidden');return;
    }
   }
-  status.textContent=Notification.permission==='granted'?'Bildirim izni açık; bu cihazı Planora’ya kaydet.':'İzin vererek zamanı gelen görev ve hatırlatmaları telefonunda görebilirsin.';
+  status.textContent=Notification.permission==='granted'?'Bildirim izni açık; bu cihazı Monenda’ya kaydet.':'İzin vererek zamanı gelen görev ve hatırlatmaları telefonunda görebilirsin.';
   enable.classList.remove('hidden');disable.classList.add('hidden');test.classList.add('hidden');
  }catch(err){status.textContent='Bildirim durumu okunamadı: '+(err.message||String(err));enable.classList.remove('hidden')}
 }
 $('push-enable').addEventListener('click',async()=>{
  const b=$('push-enable');b.disabled=true;$('push-status').textContent='Bildirim izni alınıyor…';
  try{
-  if(!user)throw new Error('Önce Planora hesabına giriş yap.');
+  if(!user)throw new Error('Önce Monenda hesabına giriş yap.');
   if(!pushSupported())throw new Error('Bu cihaz web bildirimlerini desteklemiyor.');
-  if(iphoneStandaloneRequired())throw new Error('Önce Planora’yı iPhone ana ekranına ekleyip simgeden aç.');
+  if(iphoneStandaloneRequired())throw new Error('Önce Monenda’yı iPhone ana ekranına ekleyip simgeden aç.');
   const permission=Notification.permission==='default'?await Notification.requestPermission():Notification.permission;
   if(permission!=='granted')throw new Error('Bildirim izni verilmedi. iPhone Ayarları’ndan izin verebilirsin.');
   const reg=await navigator.serviceWorker.ready;
   let subscription=await reg.pushManager.getSubscription();
-  if(!subscription)subscription=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:planoraVapidBytes(PLANORA_VAPID_PUBLIC)});
+  if(!subscription)subscription=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:planoraVapidBytes(MONENDA_VAPID_PUBLIC)});
   const o=subscription.toJSON(),keys=o.keys||{};
   if(!keys.p256dh||!keys.auth)throw new Error('Bildirim aboneliği tamamlanamadı.');
   const {error}=await sb.from('planora_push_subscriptions').upsert({user_id:user.id,endpoint:subscription.endpoint,p256dh:keys.p256dh,auth_key:keys.auth},{onConflict:'endpoint'});
   if(error)throw error;
   toast('Bildirimler bu cihazda etkinleştirildi.');
  }catch(err){$('push-status').textContent='Bildirim açılamadı: '+(err.message||String(err))}
- finally{b.disabled=false;await updatePlanoraPushUI()}
+ finally{b.disabled=false;await updateMonendaPushUI()}
 });
 $('push-disable').addEventListener('click',async()=>{
  const button=$('push-disable');button.disabled=true;
@@ -775,20 +775,20 @@ $('push-disable').addEventListener('click',async()=>{
    if(user){const {error}=await sb.from('planora_push_subscriptions').delete().eq('user_id',user.id).eq('endpoint',sub.endpoint);if(error)throw error}
    await sub.unsubscribe();
   }
-  toast('Bu cihazda Planora bildirimleri kapatıldı.');
+  toast('Bu cihazda Monenda bildirimleri kapatıldı.');
  }catch(err){$('push-status').textContent='Bildirimler kapatılamadı: '+(err.message||String(err))}
- finally{button.disabled=false;await updatePlanoraPushUI()}
+ finally{button.disabled=false;await updateMonendaPushUI()}
 });
 $('push-test').addEventListener('click',async()=>{
  try{
   if(Notification.permission!=='granted')throw new Error('Önce bildirim iznini aç.');
   const reg=await navigator.serviceWorker.ready;
-  await reg.showNotification('🔔 Planora test bildirimi',{body:'Bildirimler cihazında görünüyor. Gerçek hatırlatmalar zamanı geldiğinde sunucudan gönderilir.',icon:'./icon-192.png',badge:'./icon-192.png',tag:'planora-test',data:{url:'/planora/'}});
+  await reg.showNotification('🔔 Monenda test bildirimi',{body:'Bildirimler cihazında görünüyor. Gerçek hatırlatmalar zamanı geldiğinde sunucudan gönderilir.',icon:'./icon-192.png',badge:'./icon-192.png',tag:'planora-test',data:{url:'/planora/'}});
  }catch(err){$('push-status').textContent='Test bildirimi gösterilemedi: '+(err.message||String(err))}
 });
 
 
-async function refreshAuth(){const {data:{session},error}=await sb.auth.getSession();if(error){show('auth');return}if(!session?.user){user=null;profile=null;items=[];audits=[];selectedEntryIds.clear();selectedTaskIds.clear();show('auth');return}user=session.user;const {data,error:profileError}=await sb.from('planora_profiles').select('id,activated,display_name,avatar_path').eq('id',user.id).maybeSingle();if(profileError){show('auth');msg('auth-message','Profil okunamadı: '+profileError.message);return}profile=data;if(!profile){show('auth');msg('auth-message','Profil henüz oluşmadı. Sayfayı yenile veya destek iste.');return}if(!profile.activated){show('activation');return}show('app');updatePlanoraPushUI().catch(()=>{});$('identity').textContent=(profile.display_name?.trim()||user.email.split('@')[0]);await refreshProfileAvatar();await reload()}
+async function refreshAuth(){const {data:{session},error}=await sb.auth.getSession();if(error){show('auth');return}if(!session?.user){user=null;profile=null;items=[];audits=[];selectedEntryIds.clear();selectedTaskIds.clear();show('auth');return}user=session.user;const {data,error:profileError}=await sb.from('planora_profiles').select('id,activated,display_name,avatar_path').eq('id',user.id).maybeSingle();if(profileError){show('auth');msg('auth-message','Profil okunamadı: '+profileError.message);return}profile=data;if(!profile){show('auth');msg('auth-message','Profil henüz oluşmadı. Sayfayı yenile veya destek iste.');return}if(!profile.activated){show('activation');return}show('app');updateMonendaPushUI().catch(()=>{});$('identity').textContent=(profile.display_name?.trim()||user.email.split('@')[0]);await refreshProfileAvatar();await reload()}
 sb.auth.onAuthStateChange((event)=>{if(event==='PASSWORD_RECOVERY'){$('auth').classList.remove('hidden');$('app').classList.add('hidden');$('recovery').classList.remove('hidden');return}if(event==='SIGNED_OUT'){show('auth');user=null;items=[];audits=[]}else if(event==='SIGNED_IN'||event==='TOKEN_REFRESHED'){setTimeout(refreshAuth,0)}});
 let loginFormBusy=false;
 document.querySelectorAll('[data-auth-tab]').forEach(b=>b.onclick=()=>{authTab=b.dataset.authTab;document.querySelectorAll('[data-auth-tab]').forEach(x=>x.classList.toggle('active',x===b));$('namelabel').classList.toggle('hidden',authTab!=='signup');$('auth-submit').textContent=authTab==='login'?'Giriş Yap':'Kayıt Ol';msg('auth-message','')});
@@ -1000,7 +1000,7 @@ document.addEventListener('click',async e=>{
 });
 
 
-// Planora v14: tüm ajanda ve seçili içerik izinleri birbirinden bağımsız.
+// Monenda v14: tüm ajanda ve seçili içerik izinleri birbirinden bağımsız.
 const selectedEntryIds=new Set();let contentShareState={incoming:[],outgoing:[]};let detailRecord=null;
 const kindLabel={task:'✅ Görev',note:'📝 Not',event:'📆 Etkinlik',reminder:'📆 Etkinlik'};
 function selectionCount(){const all=new Set([...selectedEntryIds,...selectedTaskIds]);$('entry-selected-count').textContent=all.size+' kayıt seçildi';}
@@ -1141,7 +1141,7 @@ setInterval(()=>{if(user&&profile?.activated)loadNotifications()},30000);
 const origTabTo=tabTo;tabTo=function(t){origTabTo(t);if(t==='sharing')loadContacts();if(t==='focus')loadNotifications()};
 // v15.2 — Konuşarak yaz: ses dosyası saklamaz, tanınan sözcükleri seçilen alana yazar.
 // SpeechRecognition bazı tarayıcılarda uzaktaki konuşma tanıma servisini kullanabilir.
-const PlanoraRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+const MonendaRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
 let dictationSession=null;
 function stopDictation(){
   if(!dictationSession)return;
@@ -1153,13 +1153,13 @@ function installDictationControl(fieldId){
   const field=$(fieldId);if(!field)return;
   const row=document.createElement('div');row.className='dictation-control speech-dictation';
   const btn=document.createElement('button');btn.type='button';btn.className='dictation-btn';
-  btn.textContent=PlanoraRecognition?'🎙️ Konuşarak yaz':'🎤 Klavye diktesini kullan';
+  btn.textContent=MonendaRecognition?'🎙️ Konuşarak yaz':'🎤 Klavye diktesini kullan';
   const status=document.createElement('span');status.className='dictation-status';status.setAttribute('role','status');
-  status.textContent=PlanoraRecognition?'Türkçe konuşma tanıma; başlatınca mikrofon izni ver.':'Bu tarayıcı doğrudan ses tanımayı sunmuyor. Metin kutusuna dokun ve klavyedeki mikrofon tuşunu kullan (Mac: sistem Dikte kısayolu).';
+  status.textContent=MonendaRecognition?'Türkçe konuşma tanıma; başlatınca mikrofon izni ver.':'Bu tarayıcı doğrudan ses tanımayı sunmuyor. Metin kutusuna dokun ve klavyedeki mikrofon tuşunu kullan (Mac: sistem Dikte kısayolu).';
   row.append(btn,status);field.insertAdjacentElement('afterend',row);
   btn.addEventListener('click',()=>{
     field.focus();
-    if(!PlanoraRecognition){
+    if(!MonendaRecognition){
       status.textContent='iPhone/iPad: klavye mikrofonuna dokun. Mac: Sistem Ayarları → Klavye → Dikte bölümünü aç ve Dikte kısayoluna bas.';
       return;
     }
@@ -1167,7 +1167,7 @@ function installDictationControl(fieldId){
     if(voiceRecorder?.state==='recording'){toast('Önce ses kaydını durdur.');return}
     stopDictation();
     let recognition;
-    try{recognition=new PlanoraRecognition()}catch(err){status.textContent='Konuşma tanıma açılamadı. Klavye diktesini kullan.';return}
+    try{recognition=new MonendaRecognition()}catch(err){status.textContent='Konuşma tanıma açılamadı. Klavye diktesini kullan.';return}
     recognition.lang='tr-TR';
     recognition.continuous=false; // Safari ve iOS uyumluluğu için kısa dinleme oturumları
     recognition.interimResults=true;
