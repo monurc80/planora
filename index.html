@@ -718,7 +718,7 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 #app #settings .push-settings{margin-top:18px}
 
 
-/* Monenda v20.8 — ana sayfa Kısa görünümü: yalnızca işaretlenen bilgiler */
+/* Monenda v20.9 — ana sayfa Kısa görünümü: yalnızca işaretlenen bilgiler */
 #app #focus.monenda-short .focus-collection .focus-entry{
  display:flex!important;flex-wrap:wrap!important;align-items:center!important;
  gap:6px 12px!important;padding:13px 16px!important;min-height:0!important;
@@ -745,7 +745,7 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 #app #focus.monenda-short .focus-collection .focus-sort-label{display:none!important}
 
 
-/* Monenda v20.8 — Kısa görünümün tek ve tutarlı kural seti: tüm kartlı sayfalar */
+/* Monenda v20.9 — Kısa görünümün tek ve tutarlı kural seti: tüm kartlı sayfalar */
 /* Ana sayfa: görevlerde başlık+tarih+Düzenle+durum; etkinlikte başlık+tarih+durum; notta başlık+tarih */
 #app #focus.monenda-short .focus-collection .focus-panel-heading .subtitle,
 #app #focus.monenda-short .focus-collection .focus-sort-label{display:none!important}
@@ -789,6 +789,55 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 /* Kısa görünümde takvimde de kart metinleri sade kalır. */
 #app #calendar.monenda-short #calendar-body .calitem{font-size:12px!important;line-height:1.25!important}
 
+
+/* Monenda v20.9 — Kısa görünüm: tüm kartlı menülerde yalnız başlık, durum, düzenle ve tarih */
+/* Varsayılan: kart içeriğindeki uzun açıklama ve ikincil eylemler gizli */
+#app .section.monenda-short .focus-entry>p,
+#app .section.monenda-short .taskrow .mainline>p,
+#app .section.monenda-short .note-grid .note .note-body{display:none!important}
+#app .section.monenda-short .focus-entry{padding:12px 15px!important;min-height:0!important}
+#app .section.monenda-short .focus-entry .focus-entry-heading{display:block!important;margin:0!important}
+#app .section.monenda-short .focus-entry .focus-entry-heading strong{font-size:15px!important;line-height:1.35!important}
+#app .section.monenda-short .focus-entry>.focus-entry-date{display:block!important;margin:5px 0 0!important;font-size:12px!important}
+#app .section.monenda-short .focus-entry>.monenda-card-actions{display:flex!important;align-items:center!important;gap:7px!important;margin-top:6px!important}
+#app .section.monenda-short .focus-entry>.monenda-card-actions button[data-edit]{display:inline-flex!important}
+#app .section.monenda-short .focus-entry>.monenda-card-actions button[data-trash]{display:none!important}
+#app .section.monenda-short .focus-entry>.stack{display:none!important}
+/* Görev kartları: başlık, yalnızca planlanan bitiş tarihi, düzenle ve durum seçimi */
+#app #tasks.monenda-short #task-list .taskrow{display:flex!important;align-items:center!important;gap:10px!important;padding:12px 14px!important;min-height:0!important}
+#app #tasks.monenda-short #task-list .taskrow .mainline{display:block!important;flex:1 1 auto!important;min-width:0!important}
+#app #tasks.monenda-short #task-list .taskrow .mainline h3{margin:0!important;font-size:14px!important}
+#app #tasks.monenda-short #task-list .taskrow .mainline h3 .pill{display:none!important}
+#app #tasks.monenda-short #task-list .taskrow .mainline .meta,
+#app #tasks.monenda-short #task-list .taskrow .mainline>p,
+#app #tasks.monenda-short #task-list .taskrow .task-complete-control,
+#app #tasks.monenda-short #task-list .taskrow .task-select-control{display:none!important}
+#app #tasks.monenda-short #task-list .taskrow .mainline .monenda-compact-date{display:block!important;margin-top:5px!important;font-size:12px!important;color:#788878!important}
+#app #tasks.monenda-short #task-list .taskrow .stack{display:flex!important;align-items:center!important;gap:7px!important}
+#app #tasks.monenda-short #task-list .taskrow .stack button[data-edit]{display:inline-flex!important}
+#app #tasks.monenda-short #task-list .taskrow .stack button[data-trash]{display:none!important}
+#app #tasks.monenda-short #task-list .taskrow .stack .monenda-status-select{display:inline-flex!important}
+#app #tasks #task-list .taskrow .mainline .monenda-compact-date{display:none}
+/* Etkinliklerim: durum ve düzenle; silme eylemi ile açıklama gizli */
+#app #events.monenda-short #event-list .focus-entry>.monenda-card-actions{display:flex!important}
+#app #events.monenda-short #event-list .focus-entry>.monenda-card-actions button[data-trash]{display:none!important}
+/* Notlar: başlık, eklenme tarihi ve düzenle */
+#app #notes.monenda-short #note-list .note{padding:12px 15px!important;min-height:0!important}
+#app #notes.monenda-short #note-list .note .note-top{display:flex!important;margin:0 0 5px!important}
+#app #notes.monenda-short #note-list .note .note-icon{display:none!important}
+#app #notes.monenda-short #note-list .note h3{display:block!important;margin:0!important;font-size:14px!important}
+#app #notes.monenda-short #note-list .note .note-actions{display:flex!important;margin-top:6px!important}
+#app #notes.monenda-short #note-list .note .note-actions button[data-trash]{display:none!important}
+/* Ana sayfa kartlarında da aynı sade içerik standardı */
+#app #focus.monenda-short .focus-collections .focus-panel-heading .subtitle,
+#app #focus.monenda-short .focus-collections .focus-sort-label{display:none!important}
+#app #focus.monenda-short .focus-collections .focus-entry{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:5px 10px!important}
+#app #focus.monenda-short .focus-collections .focus-entry-heading{flex:1 1 100%!important}
+#app #focus.monenda-short .focus-collections .focus-entry-date{flex:1 1 auto!important}
+#app #focus.monenda-short .focus-collections .focus-entry>.monenda-card-actions{flex:0 0 auto!important}
+/* Takvim: olay kutularında yalnız başlık ve tarih; açıklama/başka metin yok */
+#app #calendar.monenda-short #calendar-events-list .focus-entry>p{display:none!important}
+
 </style></head><body>
 <div id="boot" class="loading">Monenda hazırlanıyor… İnternet bağlantısı gerekli.</div>
 <div id="auth" class="auth-page hidden"><div class="card auth-panel"><h1>🌿 Monenda</h1><p class="subtitle">Küçük notlar, büyük kolaylıklar. Kişisel ajandana hoş geldin.</p><div class="tabs"><button class="btn active" data-auth-tab="login">Giriş Yap</button><button class="btn" data-auth-tab="signup">Kayıt Ol</button></div><form id="authform"><label id="namelabel" class="field hidden">Adın<input id="display-name" maxlength="80" autocomplete="name"></label><label class="field">E-posta<input id="email" type="email" required autocomplete="email"></label><label class="field">Şifre<input id="password" type="password" required minlength="8" autocomplete="current-password"></label><button class="btn primary" id="auth-submit" type="submit">Giriş Yap</button></form><p id="auth-message" class="subtitle" role="status"></p><button id="forgot" class="btn small">Şifremi unuttum</button><div id="recovery" class="hidden"><label class="field">Yeni şifre<input id="new-password" type="password" minlength="8"></label><button id="save-new-password" class="btn primary">Yeni şifreyi kaydet</button><p id="recovery-message" class="subtitle"></p></div><p class="footnotice">Yeni kullanıcı kaydında önce e-posta doğrulaması, ardından yöneticinin sana ileteceği 4 haneli kod gerekir. Kayıt olmak, başkasının ajandasına erişim sağlamaz.</p></div></div>
@@ -814,7 +863,7 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 </section>
 <section id="invitations" class="section hidden" aria-hidden="true"><div class="card"><h3>📮 Görev Takibi</h3><p class="subtitle">Gönderilen görevleri alıcı önce inceler. Kabul edilen atamalar üzerinde çalışabilir; bilgi amaçlı paylaşımlar her zaman salt okunurdur.</p><button class="btn" id="refresh-invitations">↻ Davetleri yenile</button><p id="invitation-message" class="subtitle" role="status"></p></div><div class="invite-grid" style="margin-top:17px"><div class="card"><h3>📥 Bana gelenler</h3><div id="invite-inbox"></div></div><div class="card"><h3>📤 Gönderdiklerim</h3><div id="invite-outbox"></div></div></div></section>
 <section id="settings" class="section"><div class="card"><h3>🎨 Benim tarzım</h3><p class="subtitle">Bu sürümde renkler bu tarayıcıya kaydedilir; sonraki aşamada hesabına senkronize edilecek.</p><div class="settings-grid" id="theme-controls"></div><div class="stack" style="margin-top:18px"><button id="reset-theme" class="btn">Varsayılana dön</button></div></div></section>
-<div class="footnotice version-footer">Monenda v20.8</div>
+<div class="footnotice version-footer">Monenda v20.9</div>
 </main></div></div>
 <div id="notifications-backdrop" class="overlay hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="notifications-heading"><div class="modal detail-sheet"><div class="stack" style="justify-content:space-between"><h2 id="notifications-heading">🔔 Bildirimlerim</h2><button id="notifications-close" type="button" class="btn small">✕</button></div><div id="notifications-list"></div><button id="notifications-read" class="btn small" type="button">Hepsini okundu işaretle</button></div></div>
 <div id="metric-backdrop" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="metric-heading"><div class="modal detail-sheet"><div class="stack" style="justify-content:space-between"><h2 id="metric-heading">Kayıtlar</h2><button id="metric-close" class="btn small" type="button">✕</button></div><p id="metric-subtitle" class="subtitle"></p><div id="metric-results" class="metric-results"></div></div></div>
@@ -1008,11 +1057,12 @@ function homeEntryCard(x){
  const date=type==='note'?x.created_at:x.due_at;
  const description=String(x.body||'');
  const state=type==='task'?monendaTaskStatus(x):type==='event'?monendaEventStatus(x):'';
+ const actions=type==='task'?'<div class="monenda-card-actions">'+(state==='overdue'?monendaBadge(x):'')+'<button type="button" class="btn small" data-edit="'+escapeHTML(x.id)+'">Düzenle</button>'+monendaTaskSelect(x)+'</div>':type==='event'?'<div class="monenda-card-actions">'+monendaBadge(x)+'<button type="button" class="btn small" data-edit="'+escapeHTML(x.id)+'">Düzenle</button></div>':'<div class="monenda-card-actions"><button type="button" class="btn small" data-edit="'+escapeHTML(x.id)+'">Düzenle</button></div>';
  return `<article class="focus-entry entry-open focus-entry-${type}" tabindex="0" role="button" data-detail="${x.id}">
   <div class="focus-entry-heading"><span aria-hidden="true">${icon}</span><strong>${escapeHTML(x.title)}</strong></div>
   ${description?`<p>${escapeHTML(description.slice(0,145))}${description.length>145?'…':''}</p>`:''}
-  <div class="focus-entry-date">${when}: ${date?dateText(date):'Belirlenmedi'}${type==='task'&&x.priority==='high'?' · Öncelikli':''}</div>
-  ${type==='task'?'<div class="monenda-card-actions">'+(state==='overdue'?monendaBadge(x):'')+'<button type="button" class="btn small" data-edit="'+escapeHTML(x.id)+'">Düzenle</button>'+monendaTaskSelect(x)+'</div>':type==='event'?'<div class="monenda-card-actions">'+monendaBadge(x)+'</div>':''}
+  <div class="focus-entry-date">${when}: ${date?dateText(date):'Belirlenmedi'}</div>
+  ${actions}
   </article>`;
 }
 function renderHomePanels(){
@@ -1041,7 +1091,7 @@ function render(){
  renderHomePanels();renderTasks();renderEventsPage();renderNotes();renderCalendar();renderReports();renderAudit();
 }
 const validColor=c=>/^#[0-9a-fA-F]{6}$/.test(c||'')?c:null;
-function taskHTML(arr,selectable=false){return arr.map(x=>`<div role="button" tabindex="0" class="taskrow entry-open ${x.priority==='high'?'high':x.priority==='low'?'low':''} ${x.status==='completed'?'done':''}" data-detail="${x.id}" data-entry="${x.id}">${selectable?`<label class="task-select-control"><input class="select-task" data-select-task="${x.id}" type="checkbox" ${selectedTaskIds.has(x.id)?'checked':''} aria-label="Paylaşım için seç"><span>Seç</span></label>`:''}<label class="task-complete-control"><input data-check="${x.id}" type="checkbox" ${x.status==='completed'?'checked':''}><span>${x.status==='completed'?'Tamamlandı':'Tamamla'}</span></label><div class="mainline"><h3>${escapeHTML(x.title)} ${x.priority==='high'?'<span class="pill priority">🟢 Öncelikli</span>':''}</h3><div class="meta">${x.due_at?'📅 '+dateText(x.due_at)+' · ':''}Eklenme: ${dateText(x.created_at)}${x.remind_at?' · 🔔 '+dateText(x.remind_at):''}</div>${x.body?`<p>${escapeHTML(x.body)}</p>`:''}</div><div class="stack"><button class="btn small" data-edit="${x.id}">Düzenle</button><button class="btn small warn" data-trash="${x.id}">Sil</button></div></div>`).join('')}
+function taskHTML(arr,selectable=false){return arr.map(x=>`<div role="button" tabindex="0" class="taskrow entry-open ${x.priority==='high'?'high':x.priority==='low'?'low':''} ${x.status==='completed'?'done':''}" data-detail="${x.id}" data-entry="${x.id}">${selectable?`<label class="task-select-control"><input class="select-task" data-select-task="${x.id}" type="checkbox" ${selectedTaskIds.has(x.id)?'checked':''} aria-label="Paylaşım için seç"><span>Seç</span></label>`:''}<label class="task-complete-control"><input data-check="${x.id}" type="checkbox" ${x.status==='completed'?'checked':''}><span>${x.status==='completed'?'Tamamlandı':'Tamamla'}</span></label><div class="mainline"><h3>${escapeHTML(x.title)} ${x.priority==='high'?'<span class="pill priority">🟢 Öncelikli</span>':''}</h3><div class="meta">${x.due_at?'📅 '+dateText(x.due_at)+' · ':''}Eklenme: ${dateText(x.created_at)}${x.remind_at?' · 🔔 '+dateText(x.remind_at):''}</div><div class="monenda-compact-date">${x.due_at?'Bitiş: '+dateText(x.due_at):'Bitiş tarihi belirlenmedi'}</div>${x.body?`<p>${escapeHTML(x.body)}</p>`:''}</div><div class="stack"><button class="btn small" data-edit="${x.id}">Düzenle</button><button class="btn small warn" data-trash="${x.id}">Sil</button></div></div>`).join('')}
 function renderTasks(){const find=$('search').value.toLocaleLowerCase('tr'),status=$('status-filter').value,sort=$('sort').value;let data=items.filter(x=>x.kind==='task'&&(status==='trash'?!!x.deleted_at:!x.deleted_at)&&(status==='all'||status==='trash'||(status==='active'?x.status!=='completed':status==='completed'?x.status==='completed':status==='today'?x.status!=='completed'&&x.due_at&&localISO(new Date(x.due_at))===today():status==='week'?x.status!=='completed'&&x.due_at&&new Date(x.due_at)>=new Date(new Date().setHours(0,0,0,0))&&new Date(x.due_at)<new Date(Date.now()+7*86400000):status==='overdue'?x.status!=='completed'&&x.due_at&&new Date(x.due_at)<new Date():status==='high'?x.status!=='completed'&&x.priority==='high':false))&&(x.title+' '+x.body).toLocaleLowerCase('tr').includes(find));data.sort((a,b)=>sort==='due_asc'?(a.due_at||'9999').localeCompare(b.due_at||'9999'):sort==='due_desc'?(b.due_at||'0000').localeCompare(a.due_at||'0000'):sort==='created_asc'?a.created_at.localeCompare(b.created_at):sort==='created_desc'?b.created_at.localeCompare(a.created_at):(a.priority==='high'?0:a.priority==='normal'?1:2)-(b.priority==='high'?0:b.priority==='normal'?1:2));$('task-list').innerHTML=status==='trash'?data.map(x=>`<div class="taskrow"><div class="mainline"><b>${escapeHTML(x.title)}</b><div class="meta">Silindi: ${dateText(x.deleted_at)}</div></div><button class="btn small" data-restore="${x.id}">Geri al</button><button class="btn small warn" data-harddelete="${x.id}">Kalıcı sil</button></div>`).join(''):taskHTML(data,false);if(!$('task-list').innerHTML)$('task-list').innerHTML='<div class="empty">Burada henüz kayıt yok 🌱</div>';updateSelectedCount()}
 function renderNotes(){$('note-list').innerHTML=sortAgendaRows(visibleItems('note'),$('notes-sort').value).map(x=>`<article class="note entry-open" data-detail="${x.id}" role="button" tabindex="0" style="background:linear-gradient(#ffffff95,#ffffff95),${validColor(x.color)||'#fff0d2'}"><div class="note-top"><span class="note-icon">✎</span><span class="muted">${dateText(x.created_at)}</span></div><h3>${escapeHTML(x.title)}</h3><p class="note-body">${escapeHTML(x.body)}</p><div class="note-actions"><button class="btn small" data-edit="${x.id}">✏️ Düzenle</button><button class="btn small warn" data-trash="${x.id}">Sil</button></div></article>`).join('')||'<div class="empty">Henüz not yok. İlk notunu ekle ✨</div>'}
 function renderCalendar(){const view=$('calendar-view').value;const y=month.getFullYear(),m=month.getMonth();$('month-label').textContent=month.toLocaleDateString('tr-TR',{year:'numeric',month:view==='year'?undefined:'long'});const grouped={};visibleItems().filter(x=>x.due_at&&calendarVisibleKinds[x.kind]).forEach(x=>{const d=localISO(new Date(x.due_at));const bucket=(grouped[d]??=[]);if(!bucket.some(other=>other.id===x.id))bucket.push(x)});const body=$('calendar-body');if(view==='year'){body.innerHTML='<div class="grid">'+Array.from({length:12},(_,i)=>`<button class="card btn" data-open-month="${i}"><b>${new Date(y,i,1).toLocaleString('tr-TR',{month:'long'})}</b><p class="muted">${Object.keys(grouped).filter(d=>d.startsWith(y+'-'+String(i+1).padStart(2,'0'))).reduce((n,d)=>n+grouped[d].length,0)} kayıt</p></button>`).join('')+'</div>';return}let dates=[];if(view==='day')dates=[new Date(y,m,month.getDate())];else if(view==='week'){let d=new Date(month),weekday=(d.getDay()+6)%7;d.setDate(d.getDate()-weekday);dates=Array.from({length:7},(_,i)=>new Date(d.getFullYear(),d.getMonth(),d.getDate()+i))}else{const offset=(new Date(y,m,1).getDay()+6)%7;dates=Array.from({length:Math.ceil((offset+new Date(y,m+1,0).getDate())/7)*7},(_,i)=>new Date(y,m,1-offset+i))}body.innerHTML='<div class="calendar">'+(view==='month'?['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'].map(x=>`<b class="center muted">${x}</b>`).join(''):'')+dates.map(d=>{const ds=localISO(d);const outside=view==='month'&&d.getMonth()!==m;return `<div class="day ${outside?'off outside-month':''} ${ds===today()?'today':''}"><b>${outside?'':d.getDate()+' '+(view==='day'||view==='week'?d.toLocaleString('tr-TR',{month:'short'}):'')}</b>${(outside?[]:(grouped[ds]||[])).slice(0,view==='month'?3:20).map(x=>`<span role="button" tabindex="0" data-detail="${x.id}" class="calitem cal-${x.kind}" title="${escapeHTML(x.kind==='task'?'Görev':x.kind==='event'?'Etkinlik':'Not')}: ${escapeHTML(x.title)}">${x.kind==='task'?'✅':x.kind==='event'?'📆':'📝'} ${escapeHTML(x.title)}</span>`).join('')}</div>`}).join('')+'</div>'}
