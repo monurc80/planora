@@ -599,6 +599,21 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
  #app .sidebar .profile-name-button strong{font-size:12px!important}
  #app .sidebar .profile-camera{width:24px;height:24px;font-size:12px}
 }
+
+/* Monenda v18.0 durum göstergeleri */
+#app .monenda-card-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:10px}
+#app .monenda-status-select{width:auto;max-width:160px;min-height:35px;padding:6px 9px;border:1px solid #d9ddcf;background:#fff;border-radius:10px;font:inherit;font-size:12px;font-weight:650;color:#345044;cursor:pointer}
+#app .monenda-status-badge{display:inline-flex;align-items:center;white-space:nowrap;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:750;background:#f0eee7;color:#716957}
+#app .monenda-status-completed,#app .monenda-status-occurred{background:#dceedd;color:#276342}
+#app .monenda-status-overdue{background:#ffe2dc;color:#a23c2d}
+#app .monenda-status-today{background:#e0ebff;color:#295fa3}
+#app .monenda-status-pending,#app .monenda-status-planned{background:#fff0cf;color:#8b641b}
+#app .monenda-status-cancelled{background:#e9e9e9;color:#606060}
+#app .taskrow .monenda-status-select{max-width:130px}
+#app #detail-actions .monenda-status-select{min-height:41px}
+#app .calitem .monenda-status-badge{padding:2px 5px;font-size:9px}
+@media(max-width:600px){#app .monenda-card-actions{gap:6px}#app .monenda-status-select{max-width:130px}}
+
 </style></head><body>
 <div id="boot" class="loading">Monenda hazırlanıyor… İnternet bağlantısı gerekli.</div>
 <div id="auth" class="auth-page hidden"><div class="card auth-panel"><h1>🌿 Monenda</h1><p class="subtitle">Küçük notlar, büyük kolaylıklar. Kişisel ajandana hoş geldin.</p><div class="tabs"><button class="btn active" data-auth-tab="login">Giriş Yap</button><button class="btn" data-auth-tab="signup">Kayıt Ol</button></div><form id="authform"><label id="namelabel" class="field hidden">Adın<input id="display-name" maxlength="80" autocomplete="name"></label><label class="field">E-posta<input id="email" type="email" required autocomplete="email"></label><label class="field">Şifre<input id="password" type="password" required minlength="8" autocomplete="current-password"></label><button class="btn primary" id="auth-submit" type="submit">Giriş Yap</button></form><p id="auth-message" class="subtitle" role="status"></p><button id="forgot" class="btn small">Şifremi unuttum</button><div id="recovery" class="hidden"><label class="field">Yeni şifre<input id="new-password" type="password" minlength="8"></label><button id="save-new-password" class="btn primary">Yeni şifreyi kaydet</button><p id="recovery-message" class="subtitle"></p></div><p class="footnotice">Yeni kullanıcı kaydında önce e-posta doğrulaması, ardından yöneticinin sana ileteceği 4 haneli kod gerekir. Kayıt olmak, başkasının ajandasına erişim sağlamaz.</p></div></div>
@@ -1255,6 +1270,116 @@ $('export-personal-csv').onclick=()=>{const csv='\ufeff'+csvRows().map(r=>r.map(
 $('export-personal-excel').onclick=()=>{const xmlEscape=v=>escapeHTML(v).replaceAll('&#39;','&apos;');const body=csvRows().map(r=>'<Row>'+r.map(v=>'<Cell><Data ss:Type="String">'+xmlEscape(v)+'</Data></Cell>').join('')+'</Row>').join('');const xml='<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"><Worksheet ss:Name="Görevler"><Table>'+body+'</Table></Worksheet></Workbook>';downloadData(new Blob([xml],{type:'application/vnd.ms-excel;charset=utf-8'}),'planora-gorevler.xml')};
 $('print-personal-pdf').onclick=()=>window.print();
 (function start(){const y=new Date().getFullYear(),m=String(new Date().getMonth()+1).padStart(2,'0');$('report-from').value=y+'-'+m+'-01';$('report-to').value=today();applyTheme();refreshAuth().catch(err=>{show('auth');msg('auth-message',err.message)})})();
+
+/* Monenda v18.0 — akıllı durum yönetimi
+   Görev: yalnız kullanıcı tamamlar; gecikme bitiş tarihinden hesaplanır.
+   Etkinlik: gün geçince otomatik gerçekleşti; kayıt durumunu değiştirmek gerekmez.
+*/
+function monendaTaskStatus(x){
+ if(x.status==='completed')return 'completed';
+ return x.due_at && new Date(x.due_at).getTime()<Date.now()?'overdue':'pending';
+}
+function monendaEventStatus(x){
+ if(x.status==='cancelled')return 'cancelled';
+ if(!x.due_at)return 'planned';
+ const date=new Date(x.due_at);
+ if(!Number.isFinite(date.getTime()))return 'planned';
+ const localDate=localISO(date), localToday=today();
+ return localDate<localToday?'occurred':localDate===localToday?'today':'planned';
+}
+const monendaStatusText={completed:'Tamamlandı',overdue:'Gecikti',pending:'Beklemede',occurred:'Gerçekleşti',today:'Bugün',planned:'Planlandı',cancelled:'İptal Edildi'};
+function monendaBadge(x){
+ const state=x.kind==='task'?monendaTaskStatus(x):monendaEventStatus(x);
+ return '<span class="monenda-status-badge monenda-status-'+state+'">'+monendaStatusText[state]+'</span>';
+}
+function monendaTaskSelect(x){
+ const status=x.status==='completed'?'completed':'pending';
+ return '<select class="monenda-status-select" data-monenda-task-status="'+escapeHTML(x.id)+'" aria-label="Görev durumunu değiştir" onclick="event.stopPropagation()">'+
+ '<option value="pending" '+(status==='pending'?'selected':'')+'>Beklemede</option>'+
+ '<option value="completed" '+(status==='completed'?'selected':'')+'>Tamamlandı</option></select>';
+}
+// Anasayfadaki küçük kartlar
+const monendaPreviousHomeEntryCard=homeEntryCard;
+homeEntryCard=function(x){
+ let html=monendaPreviousHomeEntryCard(x);
+ if(x.kind==='task'){
+  html=html.replace('</article>','<div class="monenda-card-actions">'+monendaBadge(x)+'<button type="button" class="btn small" data-edit="'+escapeHTML(x.id)+'">Düzenle</button>'+monendaTaskSelect(x)+'</div></article>');
+ }else if(x.kind==='event'){
+  html=html.replace('</article>','<div class="monenda-card-actions">'+monendaBadge(x)+'</div></article>');
+ }
+ return html;
+};
+// Görevler sayfasının büyük kartları, mevcut seçim kutularını koru
+const monendaPreviousTaskHTML=taskHTML;
+taskHTML=function(arr,selectable=false){
+ let html=monendaPreviousTaskHTML(arr,selectable);
+ for(const x of arr){
+  const edit='<button class="btn small" data-edit="'+x.id+'">Düzenle</button>';
+  const replacement=edit+monendaTaskSelect(x)+monendaBadge(x);
+  html=html.replace(edit,replacement);
+ }
+ return html;
+};
+// Rapor ve özet metriklerinde açılan görev kutuları
+const monendaPreviousMetricRowHTML=metricRowHTML;
+metricRowHTML=function(x){
+ let html=monendaPreviousMetricRowHTML(x);
+ html=html.replace('</article>','<div class="monenda-card-actions">'+monendaBadge(x)+monendaTaskSelect(x)+'</div></article>');
+ return html;
+};
+// Etkinlik kartları ve takvim üzerindeki öğeler
+const monendaPreviousRenderCalendar=renderCalendar;
+renderCalendar=function(){
+ monendaPreviousRenderCalendar();
+ document.querySelectorAll('#calendar-events-list .focus-entry').forEach(el=>{
+  const x=items.find(item=>item.id===el.dataset.detail);
+  if(!x||x.kind!=='event')return;
+  el.querySelector('.monenda-card-actions')?.remove();
+  el.insertAdjacentHTML('beforeend','<div class="monenda-card-actions">'+monendaBadge(x)+'</div>');
+ });
+ document.querySelectorAll('#calendar-body .calitem').forEach(el=>{
+  const x=items.find(item=>item.id===el.dataset.detail);
+  if(x?.kind==='task'||x?.kind==='event'){
+   el.querySelector('.monenda-status-badge')?.remove();
+   el.insertAdjacentHTML('beforeend',' '+monendaBadge(x));
+  }
+ });
+};
+// Detay penceresinde düzenlemenin hemen yanında durum seçimi
+const monendaPreviousRenderDetail=renderDetail;
+renderDetail=function(x,shared){
+ monendaPreviousRenderDetail(x,shared);
+ if(x.kind==='task'){
+  const meta=$('detail-content').querySelector('.detail-meta');
+  if(meta)meta.insertAdjacentHTML('beforeend','<div><b>Güncel durum</b><span>'+monendaBadge(x)+'</span></div>');
+  if(!shared){
+   const edit=$('detail-actions').querySelector('[data-detail-edit]');
+   if(edit)edit.insertAdjacentHTML('afterend',monendaTaskSelect(x));
+  }
+ }else if(x.kind==='event'){
+  const meta=$('detail-content').querySelector('.detail-meta');
+  if(meta)meta.insertAdjacentHTML('beforeend','<div><b>Durum</b><span>'+monendaBadge(x)+'</span></div>');
+ }
+};
+// Manuel durum değişikliği mevcut Supabase güncelleme ve işlem geçmişi akışını kullanır.
+document.addEventListener('change',async e=>{
+ const select=e.target.closest('[data-monenda-task-status]');
+ if(!select)return;
+ const x=items.find(item=>item.id===select.dataset.monendaTaskStatus&&item.kind==='task'&&!item.deleted_at);
+ if(!x||x.owner_id!==user?.id){toast('Bu görevi değiştirme yetkin yok.');return;}
+ const completed=select.value==='completed';
+ if((x.status==='completed')===completed)return;
+ select.disabled=true;
+ await updateEntry(x.id,{status:completed?'completed':'pending',completed_at:completed?new Date().toISOString():null});
+ // Açık detay penceresinin de güncellenmesini sağla.
+ if(detailRecord?.obj?.id===x.id&&!$('detail-backdrop').classList.contains('hidden')){
+  const fresh=items.find(item=>item.id===x.id);
+  if(fresh){detailRecord.obj=fresh;renderDetail(fresh,detailRecord.shareInfo);}
+ }
+});
+// Saat değiştikçe gecikme, gün değiştikçe etkinlik durumu kendiliğinden güncellenir.
+setInterval(()=>{if(user&&profile?.activated)render()},60000);
+
 </script><script>
 /* PWA: yalnızca çevrimdışı bilgilendirme sayfası saklanır; Supabase oturumu/verileri saklanmaz. */
 if('serviceWorker' in navigator) {
