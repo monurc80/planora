@@ -1284,8 +1284,12 @@ function monendaEventStatus(x){
  if(!x.due_at)return 'planned';
  const date=new Date(x.due_at);
  if(!Number.isFinite(date.getTime()))return 'planned';
- const localDate=localISO(date), localToday=today();
- return localDate<localToday?'occurred':localDate===localToday?'today':'planned';
+ // Etkinlik başlangıcı değil, kayıttaki etkinlik/bitiş tarihi ve saati esas alınır.
+ // Geçmiş etkinlikler aynı gün içinde bile anında Tamamlandı olur.
+ const endTime=date.getTime();
+ const now=Date.now();
+ if(endTime<=now)return 'occurred';
+ return localISO(date)===today()?'today':'planned';
 }
 const monendaStatusText={completed:'Tamamlandı',overdue:'Gecikti',pending:'Beklemede',occurred:'Tamamlandı',today:'Bugün',planned:'Planlandı',cancelled:'İptal Edildi'};
 function monendaBadge(x){
