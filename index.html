@@ -718,7 +718,7 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 #app #settings .push-settings{margin-top:18px}
 
 
-/* Monenda v20.9 — ana sayfa Kısa görünümü: yalnızca işaretlenen bilgiler */
+/* Monenda v20.10 — ana sayfa Kısa görünümü: yalnızca işaretlenen bilgiler */
 #app #focus.monenda-short .focus-collection .focus-entry{
  display:flex!important;flex-wrap:wrap!important;align-items:center!important;
  gap:6px 12px!important;padding:13px 16px!important;min-height:0!important;
@@ -745,7 +745,7 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 #app #focus.monenda-short .focus-collection .focus-sort-label{display:none!important}
 
 
-/* Monenda v20.9 — Kısa görünümün tek ve tutarlı kural seti: tüm kartlı sayfalar */
+/* Monenda v20.10 — Kısa görünümün tek ve tutarlı kural seti: tüm kartlı sayfalar */
 /* Ana sayfa: görevlerde başlık+tarih+Düzenle+durum; etkinlikte başlık+tarih+durum; notta başlık+tarih */
 #app #focus.monenda-short .focus-collection .focus-panel-heading .subtitle,
 #app #focus.monenda-short .focus-collection .focus-sort-label{display:none!important}
@@ -790,7 +790,7 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 #app #calendar.monenda-short #calendar-body .calitem{font-size:12px!important;line-height:1.25!important}
 
 
-/* Monenda v20.9 — Kısa görünüm: tüm kartlı menülerde yalnız başlık, durum, düzenle ve tarih */
+/* Monenda v20.10 — Kısa görünüm: tüm kartlı menülerde yalnız başlık, durum, düzenle ve tarih */
 /* Varsayılan: kart içeriğindeki uzun açıklama ve ikincil eylemler gizli */
 #app .section.monenda-short .focus-entry>p,
 #app .section.monenda-short .taskrow .mainline>p,
@@ -838,6 +838,38 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 /* Takvim: olay kutularında yalnız başlık ve tarih; açıklama/başka metin yok */
 #app #calendar.monenda-short #calendar-events-list .focus-entry>p{display:none!important}
 
+
+/* v20.10 — authoritative compact mode, driven from body state and current page */
+body[data-monenda-view="short"][data-monenda-page="focus"] #focus .focus-entry>p,
+body[data-monenda-view="short"][data-monenda-page="events"] #events .focus-entry>p,
+body[data-monenda-view="short"][data-monenda-page="calendar"] #calendar .focus-entry>p,
+body[data-monenda-view="short"][data-monenda-page="tasks"] #tasks .taskrow .mainline>p,
+body[data-monenda-view="short"][data-monenda-page="notes"] #notes .note .note-body{display:none!important}
+body[data-monenda-view="short"][data-monenda-page="focus"] #focus .focus-collection .focus-panel-heading .subtitle,
+body[data-monenda-view="short"][data-monenda-page="focus"] #focus .focus-collection .focus-sort-label{display:none!important}
+body[data-monenda-view="short"][data-monenda-page="focus"] #focus .focus-collection .focus-entry{padding:12px 15px!important;min-height:0!important}
+body[data-monenda-view="short"][data-monenda-page="focus"] #focus .focus-collection .focus-entry-heading{margin:0!important}
+body[data-monenda-view="short"][data-monenda-page="focus"] #focus .focus-collection .focus-entry-date{display:block!important;margin-top:5px!important}
+body[data-monenda-view="short"][data-monenda-page="focus"] #focus .focus-collection .focus-entry .monenda-card-actions{display:flex!important;align-items:center!important;gap:8px!important;margin-top:6px!important}
+body[data-monenda-view="short"][data-monenda-page="focus"] #focus .focus-collection .focus-entry .monenda-card-actions [data-edit]{display:inline-flex!important}
+body[data-monenda-view="short"][data-monenda-page="focus"] #focus .focus-collection .focus-entry .monenda-card-actions [data-trash]{display:none!important}
+body[data-monenda-view="short"][data-monenda-page="tasks"] #tasks #task-list .taskrow{padding:12px 14px!important;min-height:0!important;align-items:center!important}
+body[data-monenda-view="short"][data-monenda-page="tasks"] #tasks #task-list .taskrow .mainline .meta,
+body[data-monenda-view="short"][data-monenda-page="tasks"] #tasks #task-list .taskrow .task-complete-control,
+body[data-monenda-view="short"][data-monenda-page="tasks"] #tasks #task-list .taskrow .task-select-control,
+body[data-monenda-view="short"][data-monenda-page="tasks"] #tasks #task-list .taskrow .stack [data-trash]{display:none!important}
+body[data-monenda-view="short"][data-monenda-page="tasks"] #tasks #task-list .taskrow .mainline .monenda-compact-date{display:block!important;margin-top:5px!important}
+body[data-monenda-view="short"][data-monenda-page="tasks"] #tasks #task-list .taskrow .stack{display:flex!important;align-items:center!important;gap:8px!important}
+body[data-monenda-view="short"][data-monenda-page="tasks"] #tasks #task-list .taskrow .stack [data-edit],
+body[data-monenda-view="short"][data-monenda-page="tasks"] #tasks #task-list .taskrow .stack .monenda-status-select{display:inline-flex!important}
+body[data-monenda-view="short"][data-monenda-page="events"] #events #event-list .focus-entry{padding:12px 15px!important}
+body[data-monenda-view="short"][data-monenda-page="events"] #events #event-list .focus-entry .monenda-card-actions{display:flex!important;align-items:center!important;gap:8px!important}
+body[data-monenda-view="short"][data-monenda-page="events"] #events #event-list .focus-entry .monenda-card-actions [data-trash]{display:none!important}
+body[data-monenda-view="short"][data-monenda-page="notes"] #notes #note-list .note{padding:12px 15px!important;min-height:0!important}
+body[data-monenda-view="short"][data-monenda-page="notes"] #notes #note-list .note .note-icon{display:none!important}
+body[data-monenda-view="short"][data-monenda-page="notes"] #notes #note-list .note .note-actions [data-trash]{display:none!important}
+body[data-monenda-view="short"][data-monenda-page="calendar"] #calendar #calendar-events-list .focus-entry>p{display:none!important}
+
 </style></head><body>
 <div id="boot" class="loading">Monenda hazırlanıyor… İnternet bağlantısı gerekli.</div>
 <div id="auth" class="auth-page hidden"><div class="card auth-panel"><h1>🌿 Monenda</h1><p class="subtitle">Küçük notlar, büyük kolaylıklar. Kişisel ajandana hoş geldin.</p><div class="tabs"><button class="btn active" data-auth-tab="login">Giriş Yap</button><button class="btn" data-auth-tab="signup">Kayıt Ol</button></div><form id="authform"><label id="namelabel" class="field hidden">Adın<input id="display-name" maxlength="80" autocomplete="name"></label><label class="field">E-posta<input id="email" type="email" required autocomplete="email"></label><label class="field">Şifre<input id="password" type="password" required minlength="8" autocomplete="current-password"></label><button class="btn primary" id="auth-submit" type="submit">Giriş Yap</button></form><p id="auth-message" class="subtitle" role="status"></p><button id="forgot" class="btn small">Şifremi unuttum</button><div id="recovery" class="hidden"><label class="field">Yeni şifre<input id="new-password" type="password" minlength="8"></label><button id="save-new-password" class="btn primary">Yeni şifreyi kaydet</button><p id="recovery-message" class="subtitle"></p></div><p class="footnotice">Yeni kullanıcı kaydında önce e-posta doğrulaması, ardından yöneticinin sana ileteceği 4 haneli kod gerekir. Kayıt olmak, başkasının ajandasına erişim sağlamaz.</p></div></div>
@@ -863,7 +895,7 @@ body{background:var(--page-bg);color:var(--text-main);min-height:100vh}
 </section>
 <section id="invitations" class="section hidden" aria-hidden="true"><div class="card"><h3>📮 Görev Takibi</h3><p class="subtitle">Gönderilen görevleri alıcı önce inceler. Kabul edilen atamalar üzerinde çalışabilir; bilgi amaçlı paylaşımlar her zaman salt okunurdur.</p><button class="btn" id="refresh-invitations">↻ Davetleri yenile</button><p id="invitation-message" class="subtitle" role="status"></p></div><div class="invite-grid" style="margin-top:17px"><div class="card"><h3>📥 Bana gelenler</h3><div id="invite-inbox"></div></div><div class="card"><h3>📤 Gönderdiklerim</h3><div id="invite-outbox"></div></div></div></section>
 <section id="settings" class="section"><div class="card"><h3>🎨 Benim tarzım</h3><p class="subtitle">Bu sürümde renkler bu tarayıcıya kaydedilir; sonraki aşamada hesabına senkronize edilecek.</p><div class="settings-grid" id="theme-controls"></div><div class="stack" style="margin-top:18px"><button id="reset-theme" class="btn">Varsayılana dön</button></div></div></section>
-<div class="footnotice version-footer">Monenda v20.9</div>
+<div class="footnotice version-footer">Monenda v20.10</div>
 </main></div></div>
 <div id="notifications-backdrop" class="overlay hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="notifications-heading"><div class="modal detail-sheet"><div class="stack" style="justify-content:space-between"><h2 id="notifications-heading">🔔 Bildirimlerim</h2><button id="notifications-close" type="button" class="btn small">✕</button></div><div id="notifications-list"></div><button id="notifications-read" class="btn small" type="button">Hepsini okundu işaretle</button></div></div>
 <div id="metric-backdrop" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="metric-heading"><div class="modal detail-sheet"><div class="stack" style="justify-content:space-between"><h2 id="metric-heading">Kayıtlar</h2><button id="metric-close" class="btn small" type="button">✕</button></div><p id="metric-subtitle" class="subtitle"></p><div id="metric-results" class="metric-results"></div></div></div>
@@ -1614,11 +1646,15 @@ function monendaSyncView(){
  const current=tab;
  const control=document.getElementById('monenda-view-control');
  const select=document.getElementById('monenda-view-mode');
+ const short=monendaPageViews[current]==='short';
  control.classList.toggle('hidden',!monendaViewPages.includes(current));
- select.value=monendaPageViews[current]==='short'?'short':'detailed';
- for(const section of document.querySelectorAll('.section')){
-  section.classList.toggle('monenda-short',monendaViewPages[section.id]==='short');
- }
+ select.value=short?'short':'detailed';
+ document.body.dataset.monendaPage=current;
+ document.body.dataset.monendaView=short?'short':'detailed';
+ document.querySelectorAll('.section').forEach(section=>{
+  section.classList.toggle('monenda-short',monendaPageViews[section.id]==='short');
+  section.classList.toggle('monenda-detailed',monendaPageViews[section.id]!=='short');
+ });
 }
 document.getElementById('monenda-view-mode').addEventListener('change',e=>{
  if(!monendaViewPages.includes(tab))return;
