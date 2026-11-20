@@ -1827,11 +1827,23 @@ async function monendaRunOCR(file){
   const Tesseract=await monendaLoadTesseract();
   worker=await Tesseract.createWorker("tur+eng",1);
   const result=await worker.recognize(file);
-  const extracted=(result.data.text||"").trim();
-  if(!extracted){status.textContent="Bu görselde okunabilir metin bulunamadı.";return}
+  // Tesseract satırlarını güven puanına ve metin kalitesine göre süz:
+  // düşük güvenli arayüz etiketleri, kullanıcı adları ve OCR gürültüsü nota taşınmasın.
+  const lines=Array.isArray(result.data.lines)?result.data.lines:[];
+  const cleanLines=lines.map(line=>{
+    const raw=String(line.text||"").replace(/\s+/g," ").trim();
+    const letters=(raw.match(/[\\p{L}\\p{N}]/gu)||[]).length;
+    const meaningful=(raw.match(/[\\p{L}]/gu)||[]).length;
+    const ratio=raw.length?letters/raw.length:0;
+    return {text:raw,confidence:Number(line.confidence)||0,letters,meaningful,ratio};
+  }).filter(line=>line.text&&line.confidence>=52&&line.letters>=4&&line.meaningful>=3&&line.ratio>=0.68);
+  let extracted=cleanLines.map(line=>line.text).join("\n").trim();
+  // Satır metaverisi bulunmuyorsa güvenli bir karakter temizliğiyle metin alanını kullan.
+  if(!lines.length)extracted=String(result.data.text||"").split(/\\r?\\n/).map(x=>x.trim()).filter(x=>x.length>=4&&(/[\\p{L}]{3}/u.test(x))&&((x.match(/[\\p{L}\\p{N}]/gu)||[]).length/x.length)>=0.68).join("\n").trim();
+  if(!extracted){status.textContent="Bu görselde yeterince güvenilir ve okunabilir metin bulunamadı. Daha net veya yazıya yakın bir fotoğraf deneyebilirsin.";return}
   const body=$("entry-body"),existing=body.value.trim();
   body.value=existing?existing+"\n\n"+extracted:extracted;
-  body.focus();status.textContent="Metin nota aktarıldı. Görsel saklanmadı.";
+  body.focus();status.textContent="Okunabilir metinler nota aktarıldı. Düşük güvenli parçalar ayıklandı; görsel saklanmadı.";
   toast("Görselden metin çıkarıldı ✨");
  }catch(err){status.textContent="Metin çıkarılamadı: "+(err.message||String(err));}
  finally{if(worker)try{await worker.terminate()}catch{}buttons.forEach(b=>b.disabled=false)}
