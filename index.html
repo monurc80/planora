@@ -12,6 +12,8 @@
 .note-grid .note .note-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .note-grid .note .note-icon{font-size:17px;opacity:.65}
 .note-grid .note .note-body{white-space:pre-wrap;overflow-wrap:anywhere;flex:1;margin:0;font-size:14px}
+.note-raw-ocr-panel{display:grid;gap:9px;border:1px dashed #c69b58;background:#fff9ed;border-radius:13px;padding:12px}
+.note-raw-ocr-panel textarea{width:100%;min-height:120px;padding:10px;border:1px solid #d9c9a8;border-radius:10px;background:#fff;font:inherit;line-height:1.5}
 .note-format-tools,.note-image-tools{border:1px solid #e2dacb;background:#fffdfa;border-radius:16px;padding:13px;margin:10px 0;display:grid;gap:10px}
 .note-format-row{display:grid;grid-template-columns:1.3fr .8fr .7fr;gap:9px}
 .note-format-row label{display:grid;gap:5px;font-size:12px;font-weight:700}
@@ -924,6 +926,12 @@ body[data-monenda-view="short"][data-monenda-page="calendar"] #calendar #calenda
  <input id="note-camera-input" type="file" accept="image/*" capture="environment" hidden>
  <input id="note-gallery-input" type="file" accept="image/*" hidden>
  <small id="note-ocr-status" class="muted" aria-live="polite"></small>
+ <div id="note-raw-ocr-panel" class="note-raw-ocr-panel hidden">
+  <strong>Ham metin – kendin düzenle</strong>
+  <p class="muted">Otomatik ayıklama başarılı olmadı. Bulunan metni burada düzenleyebilir, gereksiz kısımları silebilirsin.</p>
+  <textarea id="note-raw-ocr-text" rows="7" placeholder="Görselden okunan ham metin…"></textarea>
+  <button type="button" class="btn small" id="note-use-raw-ocr">Düzenlediğim metni nota aktar</button>
+ </div>
 </div>
 <div id="note-format-tools" class="note-format-tools">
  <strong>Yazı biçimi</strong>
@@ -1869,9 +1877,13 @@ async function monendaRunOCR(file){
     extracted=useful.join("\\n").trim();
   }
   if(!extracted){
-    status.textContent="Otomatik seçim bu görselde metni ayıramadı. OCR filtresi görseldeki yazıyı tamamen reddetmek yerine daha toleranslı okunacak şekilde güncellendi; istersen ham metni de gösterebilirim.";
+    const rawText=String(result.data.text||"").trim();
+    $("note-raw-ocr-text").value=rawText||"Bu görselden metin okunamadı.";
+    $("note-raw-ocr-panel").classList.remove("hidden");
+    status.textContent="Otomatik ayıklama metni seçemedi. Ham OCR sonucunu aşağıda açtım; gereksiz kısımları silip istediğin metni nota aktarabilirsin.";
     return;
   }
+  $("note-raw-ocr-panel").classList.add("hidden");
   const body=$("entry-body"),existing=body.value.trim();
   body.value=existing?existing+"\n\n"+extracted:extracted;
   body.focus();status.textContent="Okunabilir metinler nota aktarıldı. Düşük güvenli parçalar ayıklandı; görsel saklanmadı.";
@@ -1879,6 +1891,15 @@ async function monendaRunOCR(file){
  }catch(err){status.textContent="Metin çıkarılamadı: "+(err.message||String(err));}
  finally{if(worker)try{await worker.terminate()}catch{}buttons.forEach(b=>b.disabled=false)}
 }
+$("note-use-raw-ocr").addEventListener("click",()=>{
+ const raw=$("note-raw-ocr-text").value.trim();
+ if(!raw){toast("Aktarılacak metin yok.");return}
+ const body=$("entry-body"),existing=body.value.trim();
+ body.value=existing?existing+"\\n\\n"+raw:raw;
+ body.focus();$("note-raw-ocr-panel").classList.add("hidden");
+ $("note-ocr-status").textContent="Düzenlediğin ham metin nota aktarıldı.";
+ toast("Düzenlediğin metin nota eklendi.");
+});
 $("note-camera-button").addEventListener("click",()=>$("note-camera-input").click());
 $("note-gallery-button").addEventListener("click",()=>$("note-gallery-input").click());
 ["note-camera-input","note-gallery-input"].forEach(id=>$(id).addEventListener("change",async e=>{const file=e.target.files?.[0];e.target.value="";if(file)await monendaRunOCR(file)}));
