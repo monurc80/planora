@@ -1841,9 +1841,9 @@ async function monendaRunOCROne(file){
   let extracted="";
   if(words.length){
     const accepted=words.filter(w=>{
-      const t=String(w.text||"").replace(/\\s+/g," ").trim();
-      const letters=(t.match(/[\\p{L}]/gu)||[]).length;
-      const alnum=(t.match(/[\\p{L}\\p{N}]/gu)||[]).length;
+      const t=String(w.text||"").replace(/\s+/g," ").trim();
+      const letters=(t.match(/[\p{L}]/gu)||[]).length;
+      const alnum=(t.match(/[\p{L}\p{N}]/gu)||[]).length;
       const confidence=Number(w.confidence)||0;
       return t.length>=4&&letters>=3&&confidence>=50&&alnum/Math.max(1,t.length)>=0.72&&!/[0-9_@]/.test(t);
     });
@@ -1853,47 +1853,47 @@ async function monendaRunOCROne(file){
       if(!groups.has(key))groups.set(key,[]);
       groups.get(key).push(w);
     }
-    extracted=[...groups.values()].map(group=>group.map(w=>String(w.text).trim()).join(" ")).filter(Boolean).join("\\n").trim();
+    extracted=[...groups.values()].map(group=>group.map(w=>String(w.text).trim()).join(" ")).filter(Boolean).join("\n").trim();
   }else{
     const raw=String(result.data.text||"");
-    extracted=raw.split(/\\r?\\n/).map(line=>line.trim()).filter(line=>{
-      const letters=(line.match(/[\\p{L}]/gu)||[]).length;
-      const alnum=(line.match(/[\\p{L}\\p{N}]/gu)||[]).length;
+    extracted=raw.split(/\r?\n/).map(line=>line.trim()).filter(line=>{
+      const letters=(line.match(/[\p{L}]/gu)||[]).length;
+      const alnum=(line.match(/[\p{L}\p{N}]/gu)||[]).length;
       return line.length>=4&&letters>=4&&alnum/Math.max(1,line.length)>=0.68&&!/[0-9_@]/.test(line);
-    }).join("\\n").trim();
+    }).join("\n").trim();
   }
   // Büyük, tasarımlı başlıklarda kelime güven puanı düşük olabilir.
   // Bu nedenle kelime filtresi sonuç verse bile ham OCR satırlarını ayrıca değerlendir.
   {
-    const rawLines=String(result.data.text||"").split(/\\r?\\n/).map(line=>line.replace(/\\s+/g," ").trim()).filter(Boolean);
+    const rawLines=String(result.data.text||"").split(/\r?\n/).map(line=>line.replace(/\s+/g," ").trim()).filter(Boolean);
     const candidates=rawLines.filter(line=>{
-      const letters=(line.match(/[\\p{L}]/gu)||[]).length;
+      const letters=(line.match(/[\p{L}]/gu)||[]).length;
       const digits=(line.match(/[0-9]/g)||[]).length;
-      const punctuation=(line.match(/[^\\p{L}\\p{N}\\s]/gu)||[]).length;
+      const punctuation=(line.match(/[^\p{L}\p{N}\s]/gu)||[]).length;
       const ratio=(letters+digits)/Math.max(1,line.length);
-      const looksLikeHandle=/[_@]/.test(line)||(/[a-z0-9_]{2,}\\s*$/i.test(line)&&digits>0);
+      const looksLikeHandle=/[_@]/.test(line)||(/[a-z0-9_]{2,}\s*$/i.test(line)&&digits>0);
       return letters>=4&&ratio>=0.52&&punctuation<=Math.max(4,letters*0.5)&&!looksLikeHandle;
     });
-    const combined=[...extracted.split(/\\r?\\n/),...candidates].map(x=>x.trim()).filter(Boolean);
+    const combined=[...extracted.split(/\r?\n/),...candidates].map(x=>x.trim()).filter(Boolean);
     const seen=new Set();
     extracted=combined.filter(line=>{
-      const key=line.toLocaleLowerCase("tr-TR").replace(/[^\\p{L}\\p{N}]+/gu,"");
+      const key=line.toLocaleLowerCase("tr-TR").replace(/[^\p{L}\p{N}]+/gu,"");
       if(!key||seen.has(key))return false;
       seen.add(key);return true;
-    }).join("\\n").trim();
+    }).join("\n").trim();
   }
   // Ham satır ve kelime çıktısı da boşsa, ham OCR panelini göster.
   if(!extracted){
-    const rawLines=String(result.data.text||"").split(/\\r?\\n/).map(line=>line.replace(/\\s+/g," ").trim()).filter(Boolean);
+    const rawLines=String(result.data.text||"").split(/\r?\n/).map(line=>line.replace(/\s+/g," ").trim()).filter(Boolean);
     const useful=rawLines.filter(line=>{
-      const letters=(line.match(/[\\p{L}]/gu)||[]).length;
+      const letters=(line.match(/[\p{L}]/gu)||[]).length;
       const digits=(line.match(/[0-9]/g)||[]).length;
-      const punctuation=(line.match(/[^\\p{L}\\p{N}\\s]/gu)||[]).length;
+      const punctuation=(line.match(/[^\p{L}\p{N}\s]/gu)||[]).length;
       const ratio=(letters+digits)/Math.max(1,line.length);
-      const looksLikeHandle=/[_@]/.test(line)||/[a-z0-9_]{2,}\\s*$/i.test(line)&&digits>0;
+      const looksLikeHandle=/[_@]/.test(line)||/[a-z0-9_]{2,}\s*$/i.test(line)&&digits>0;
       return letters>=4&&ratio>=0.52&&punctuation<=Math.max(3,letters*0.35)&&!looksLikeHandle;
     });
-    extracted=useful.join("\\n").trim();
+    extracted=useful.join("\n").trim();
   }
   if(!extracted){
     const rawText=String(result.data.text||"").trim();
@@ -1916,7 +1916,7 @@ $("note-use-raw-ocr").addEventListener("click",()=>{
  const raw=$("note-raw-ocr-text").value.trim();
  if(!raw){toast("Aktarılacak metin yok.");return}
  const body=$("entry-body"),existing=body.value.trim();
- body.value=existing?existing+"\\n\\n"+raw:raw;
+ body.value=existing?existing+"\n\n"+raw:raw;
  body.focus();$("note-raw-ocr-panel").classList.add("hidden");
  $("note-ocr-status").textContent="Düzenlediğin ham metin nota aktarıldı.";
  toast("Düzenlediğin metin nota eklendi.");
