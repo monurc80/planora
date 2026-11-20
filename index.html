@@ -1878,9 +1878,11 @@ async function monendaRunOCR(file){
   }
   if(!extracted){
     const rawText=String(result.data.text||"").trim();
-    $("note-raw-ocr-text").value=rawText||"Bu görselden metin okunamadı.";
+    $("note-raw-ocr-text").value=rawText||"Bu görselden okunabilir metin çıkarılamadı.";
     $("note-raw-ocr-panel").classList.remove("hidden");
-    status.textContent="Otomatik ayıklama metni seçemedi. Ham OCR sonucunu aşağıda açtım; gereksiz kısımları silip istediğin metni nota aktarabilirsin.";
+    status.textContent=rawText
+      ?"Otomatik ayıklama seçemedi; ham OCR metni aşağıda doğrudan gösteriliyor. Gereksiz kısımları silip nota aktarabilirsin."
+      :"OCR bu görselden metin okuyamadı. Daha net bir görsel deneyebilir veya metni elle yazabilirsin.";
     return;
   }
   $("note-raw-ocr-panel").classList.add("hidden");
