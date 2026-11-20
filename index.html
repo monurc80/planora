@@ -1804,8 +1804,10 @@ function monendaSyncNoteTools(){
  $("note-format-tools").classList.toggle("hidden",!isNote);
  $("note-created-date").parentElement.classList.toggle("hidden",!isNote);
 }
+let monendaOCRAccumulatedText="";
 const monendaBaseOpenModal=openModal;
 openModal=function(kind="note",obj=null){
+ monendaOCRAccumulatedText=obj?.body||"";
  monendaNoteStyle={...MONENDA_NOTE_DEFAULT,...(obj?.note_style||{})};
  monendaBaseOpenModal(kind,obj);
  const created=obj?.created_at?new Date(obj.created_at):new Date();
@@ -1905,9 +1907,11 @@ async function monendaRunOCROne(file){
     return;
   }
   $("note-raw-ocr-panel").classList.add("hidden");
-  const body=$("entry-body"),existing=body.value.trim();
-  body.value=existing?existing+"\n\n"+extracted:extracted;
-  body.focus();status.textContent="Okunabilir metinler nota aktarıldı. Düşük güvenli parçalar ayıklandı; görsel saklanmadı.";
+  const body=$("entry-body"),current=body.value.trim();
+  if(!monendaOCRAccumulatedText)monendaOCRAccumulatedText=current;
+  monendaOCRAccumulatedText=monendaOCRAccumulatedText?monendaOCRAccumulatedText+"\n\n"+extracted:extracted;
+  body.value=monendaOCRAccumulatedText;
+  body.focus();status.textContent="Metin nota eklendi; önceki görsellerin metni korundu.";
   toast("Görselden metin çıkarıldı ✨");
  }catch(err){status.textContent="Metin çıkarılamadı: "+(err.message||String(err));}
  finally{if(worker)try{await worker.terminate()}catch{}buttons.forEach(b=>b.disabled=false)}
@@ -1921,17 +1925,23 @@ $("note-use-raw-ocr").addEventListener("click",()=>{
  $("note-ocr-status").textContent="Düzenlediğin ham metin nota aktarıldı.";
  toast("Düzenlediğin metin nota eklendi.");
 });
+let monendaOCRAccumulatedText="";
+let monendaOCRQueueBusy=false;
 async function monendaRunOCR(fileList){
  const files=Array.from(fileList||[]).filter(file=>file&&file.type.startsWith("image/"));
  if(!files.length)return;
- const selected=files.slice(0,4);
+ if(monendaOCRQueueBusy){toast("Önce devam eden görsel aktarımının bitmesini bekle.");return;}
+ monendaOCRQueueBusy=true;
+ const selected=files.slice(0,4),status=$("note-ocr-status");
  if(files.length>4)toast("En fazla 4 görsel işlenebilir. İlk 4 görsel sırayla aktarılıyor.");
- const status=$("note-ocr-status");
- for(let i=0;i<selected.length;i++){
-  status.textContent=(i+1)+"/"+selected.length+" görsel okunuyor… Görsel sırası korunuyor.";
-  await monendaRunOCROne(selected[i]);
- }
- status.textContent=selected.length+" görsel sırayla işlendi. Metinler tek notun içeriğinde birleştirildi; görseller saklanmadı.";
+ try{
+  if(!monendaOCRAccumulatedText)monendaOCRAccumulatedText=$("entry-body").value.trim();
+  for(let i=0;i<selected.length;i++){
+   status.textContent=(i+1)+"/"+selected.length+" görsel okunuyor… Önceki metin korunuyor.";
+   await monendaRunOCROne(selected[i]);
+  }
+  status.textContent=selected.length+" görsel sırayla işlendi. Tüm metinler aynı notta birleştirildi.";
+ }finally{monendaOCRQueueBusy=false;}
 }
 $("note-camera-button").addEventListener("click",()=>$("note-camera-input").click());
 $("note-gallery-button").addEventListener("click",()=>$("note-gallery-input").click());
