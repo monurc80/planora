@@ -1827,20 +1827,34 @@ async function monendaRunOCR(file){
   const Tesseract=await monendaLoadTesseract();
   worker=await Tesseract.createWorker("tur+eng",1);
   const result=await worker.recognize(file);
-  // Tesseract satırlarını güven puanına ve metin kalitesine göre süz:
-  // düşük güvenli arayüz etiketleri, kullanıcı adları ve OCR gürültüsü nota taşınmasın.
-  const lines=Array.isArray(result.data.lines)?result.data.lines:[];
-  const cleanLines=lines.map(line=>{
-    const raw=String(line.text||"").replace(/\s+/g," ").trim();
-    const letters=(raw.match(/[\\p{L}\\p{N}]/gu)||[]).length;
-    const meaningful=(raw.match(/[\\p{L}]/gu)||[]).length;
-    const ratio=raw.length?letters/raw.length:0;
-    return {text:raw,confidence:Number(line.confidence)||0,letters,meaningful,ratio};
-  }).filter(line=>line.text&&line.confidence>=52&&line.letters>=4&&line.meaningful>=3&&line.ratio>=0.68);
-  let extracted=cleanLines.map(line=>line.text).join("\n").trim();
-  // Satır metaverisi bulunmuyorsa güvenli bir karakter temizliğiyle metin alanını kullan.
-  if(!lines.length)extracted=String(result.data.text||"").split(/\\r?\\n/).map(x=>x.trim()).filter(x=>x.length>=4&&(/[\\p{L}]{3}/u.test(x))&&((x.match(/[\\p{L}\\p{N}]/gu)||[]).length/x.length)>=0.68).join("\n").trim();
-  if(!extracted){status.textContent="Bu görselde yeterince güvenilir ve okunabilir metin bulunamadı. Daha net veya yazıya yakın bir fotoğraf deneyebilirsin.";return}
+  // Kelime bazlı süzme: görsel başlıkları büyük puntolu olsa da satır güveni düşük çıkabilir.
+  // Kelime güvenini kullan, kullanıcı adı/arayüz gürültüsünü ayıkla ve satır sırasını koru.
+  const words=Array.isArray(result.data.words)?result.data.words:[];
+  let extracted="";
+  if(words.length){
+    const accepted=words.filter(w=>{
+      const t=String(w.text||"").replace(/\\s+/g," ").trim();
+      const letters=(t.match(/[\\p{L}]/gu)||[]).length;
+      const alnum=(t.match(/[\\p{L}\\p{N}]/gu)||[]).length;
+      const confidence=Number(w.confidence)||0;
+      return t.length>=4&&letters>=3&&confidence>=50&&alnum/Math.max(1,t.length)>=0.72&&!/[0-9_@]/.test(t);
+    });
+    const groups=new Map();
+    for(const w of accepted){
+      const key=[w.block_num??0,w.par_num??0,w.line_num??0].join("-");
+      if(!groups.has(key))groups.set(key,[]);
+      groups.get(key).push(w);
+    }
+    extracted=[...groups.values()].map(group=>group.map(w=>String(w.text).trim()).join(" ")).filter(Boolean).join("\\n").trim();
+  }else{
+    const raw=String(result.data.text||"");
+    extracted=raw.split(/\\r?\\n/).map(line=>line.trim()).filter(line=>{
+      const letters=(line.match(/[\\p{L}]/gu)||[]).length;
+      const alnum=(line.match(/[\\p{L}\\p{N}]/gu)||[]).length;
+      return line.length>=4&&letters>=4&&alnum/Math.max(1,line.length)>=0.68&&!/[0-9_@]/.test(line);
+    }).join("\\n").trim();
+  }
+  if(!extracted){status.textContent="Bu görselde güvenilir metin seçilemedi. Daha net bir fotoğraf deneyebilir veya metni elle ekleyebilirsin.";return}
   const body=$("entry-body"),existing=body.value.trim();
   body.value=existing?existing+"\n\n"+extracted:extracted;
   body.focus();status.textContent="Okunabilir metinler nota aktarıldı. Düşük güvenli parçalar ayıklandı; görsel saklanmadı.";
