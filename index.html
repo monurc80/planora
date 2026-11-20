@@ -921,10 +921,10 @@ body[data-monenda-view="short"][data-monenda-page="calendar"] #calendar #calenda
 <div id="modal-bg" class="overlay hidden"><div class="modal"><div class="stack" style="justify-content:space-between"><h2 id="modal-title">Yeni kayıt</h2><button id="close-modal" class="btn small">✕</button></div><form id="entry-form"><input id="entry-id" type="hidden"><label class="field">Ne kaydetmek istiyorsun?<select id="entry-kind"><option value="note">📝 Not — sadece sakla</option><option value="event">📆 Etkinlik — randevu ve önemli gün</option><option value="task">✅ Görev — yapılması gereken iş</option></select></label><p class="kind-hint" id="kind-hint"></p><label class="field">Başlık<input id="entry-title" required maxlength="250"></label><label class="field">Not tarihi<input id="note-created-date" type="text" readonly aria-readonly="true"></label>
 <div id="note-image-tools" class="note-image-tools">
  <strong>🖼️ Görselden metin aktar</strong>
- <p class="muted">Kamerayla fotoğraf çek veya galeriden herhangi bir görsel seç. Görsel yalnızca metin çıkarmak için kullanılır; saklanmaz.</p>
+ <p class="muted">Kameradan veya galeriden en fazla 4 sıralı görsel seç. Devam eden metinler sırayla tek notun içeriğine eklenir; görseller saklanmaz.</p>
  <div class="stack"><button type="button" class="btn small" id="note-camera-button">📷 Fotoğraf çek</button><button type="button" class="btn small" id="note-gallery-button">🖼️ Galeriden seç</button></div>
- <input id="note-camera-input" type="file" accept="image/*" capture="environment" hidden>
- <input id="note-gallery-input" type="file" accept="image/*" hidden>
+ <input id="note-camera-input" type="file" accept="image/*" capture="environment" multiple hidden>
+ <input id="note-gallery-input" type="file" accept="image/*" multiple hidden>
  <small id="note-ocr-status" class="muted" aria-live="polite"></small>
  <div id="note-raw-ocr-panel" class="note-raw-ocr-panel hidden">
   <strong>Ham metin – kendin düzenle</strong>
@@ -1826,7 +1826,7 @@ async function monendaLoadTesseract(){
  if(!window.Tesseract)throw new Error("Metin tanıma başlatılamadı.");
  return window.Tesseract;
 }
-async function monendaRunOCR(file){
+async function monendaRunOCROne(file){
  if(!file||!file.type.startsWith("image/"))return;
  const status=$("note-ocr-status"),buttons=[$("note-camera-button"),$("note-gallery-button")];
  buttons.forEach(b=>b.disabled=true);status.textContent="Görsel okunuyor… İlk kullanımda Türkçe dil paketi indirilebilir.";
@@ -1902,9 +1902,21 @@ $("note-use-raw-ocr").addEventListener("click",()=>{
  $("note-ocr-status").textContent="Düzenlediğin ham metin nota aktarıldı.";
  toast("Düzenlediğin metin nota eklendi.");
 });
+async function monendaRunOCR(fileList){
+ const files=Array.from(fileList||[]).filter(file=>file&&file.type.startsWith("image/"));
+ if(!files.length)return;
+ const selected=files.slice(0,4);
+ if(files.length>4)toast("En fazla 4 görsel işlenebilir. İlk 4 görsel sırayla aktarılıyor.");
+ const status=$("note-ocr-status");
+ for(let i=0;i<selected.length;i++){
+  status.textContent=(i+1)+"/"+selected.length+" görsel okunuyor… Görsel sırası korunuyor.";
+  await monendaRunOCROne(selected[i]);
+ }
+ status.textContent=selected.length+" görsel sırayla işlendi. Metinler tek notun içeriğinde birleştirildi; görseller saklanmadı.";
+}
 $("note-camera-button").addEventListener("click",()=>$("note-camera-input").click());
 $("note-gallery-button").addEventListener("click",()=>$("note-gallery-input").click());
-["note-camera-input","note-gallery-input"].forEach(id=>$(id).addEventListener("change",async e=>{const file=e.target.files?.[0];e.target.value="";if(file)await monendaRunOCR(file)}));
+["note-camera-input","note-gallery-input"].forEach(id=>$(id).addEventListener("change",async e=>{const files=Array.from(e.target.files||[]);e.target.value="";if(files.length)await monendaRunOCR(files)}));
 monendaSyncNoteTools();
 
 </script><script>
