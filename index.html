@@ -1862,8 +1862,27 @@ async function monendaRunOCROne(file){
       return line.length>=4&&letters>=4&&alnum/Math.max(1,line.length)>=0.68&&!/[0-9_@]/.test(line);
     }).join("\\n").trim();
   }
-  // Kelime kutuları bazı görsellerde boş/eksik dönebilir. Bu durumda Tesseract'ın
-  // ham satır çıktısına daha toleranslı bir temizlik uygula; tüm metni reddetme.
+  // Büyük, tasarımlı başlıklarda kelime güven puanı düşük olabilir.
+  // Bu nedenle kelime filtresi sonuç verse bile ham OCR satırlarını ayrıca değerlendir.
+  {
+    const rawLines=String(result.data.text||"").split(/\\r?\\n/).map(line=>line.replace(/\\s+/g," ").trim()).filter(Boolean);
+    const candidates=rawLines.filter(line=>{
+      const letters=(line.match(/[\\p{L}]/gu)||[]).length;
+      const digits=(line.match(/[0-9]/g)||[]).length;
+      const punctuation=(line.match(/[^\\p{L}\\p{N}\\s]/gu)||[]).length;
+      const ratio=(letters+digits)/Math.max(1,line.length);
+      const looksLikeHandle=/[_@]/.test(line)||(/[a-z0-9_]{2,}\\s*$/i.test(line)&&digits>0);
+      return letters>=4&&ratio>=0.52&&punctuation<=Math.max(4,letters*0.5)&&!looksLikeHandle;
+    });
+    const combined=[...extracted.split(/\\r?\\n/),...candidates].map(x=>x.trim()).filter(Boolean);
+    const seen=new Set();
+    extracted=combined.filter(line=>{
+      const key=line.toLocaleLowerCase("tr-TR").replace(/[^\\p{L}\\p{N}]+/gu,"");
+      if(!key||seen.has(key))return false;
+      seen.add(key);return true;
+    }).join("\\n").trim();
+  }
+  // Ham satır ve kelime çıktısı da boşsa, ham OCR panelini göster.
   if(!extracted){
     const rawLines=String(result.data.text||"").split(/\\r?\\n/).map(line=>line.replace(/\\s+/g," ").trim()).filter(Boolean);
     const useful=rawLines.filter(line=>{
